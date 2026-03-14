@@ -1,0 +1,85 @@
+# NVIDIA Nemotron Nano 12B v2 VL via Bedrock (requires 720p H.264 videos and frame extraction)
+
+logging:
+  level: "INFO"
+
+tracking:
+  return_usage: true
+  progress_interval: 50
+
+pricing:
+  input_per_1m_tokens: 0.2
+  output_per_1m_tokens: 0.6
+
+video_source:
+  type: "s3"
+  mode: "local"
+  s3:
+    bucket: "your-s3-bucket"
+    prefix: "youtube_ads_dataset_720p_h264"
+    region: "us-east-1"
+
+video_selection:
+  mode: "all"
+  random_count: 100
+  random_seed: null
+
+pipeline:
+  preprocessor:
+    type: "frame_sampling"
+    config:
+      x_frames: 16
+      output_format: "bytes"
+      storage:
+        type: "s3"
+        config:
+          bucket: "your-s3-bucket"
+          prefix: "frames"
+          region_name: "us-east-1"
+
+  tagger:
+    type: "bedrock_vision"
+    config:
+      model_id: "nvidia.nemotron-nano-12b-v2"
+      model_name: "nvidia-nemotron-nano-12b-v2"
+      region_name: "us-east-1"
+      api_type: "converse"
+      input_type: "frames_bytes"
+      inference_params:
+        maxTokens: 300
+        temperature: 0.3
+        topP: 0.1
+        additional_model_fields:
+          top_k: 20
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/video_level_tags.jsonl"
+
+  metrics:
+    type: "multilabel_classification"
+    config:
+      pred_key: "video_level_tags"
+      gt_key: "tags"
+      exclude_tags: ['funny', 'effective', 'exciting']
+      exclude_failures: true
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+inference:
+  threshold: 0.5
+  ignore_threshold: true
+  test_tags: null
+
+paths:
+  inputs_dir: "data/inputs"
+  label_file: "YoutubeAdvertisementsLabels.json"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos_nvidia_720p"
+
+labels:
+  gt_threshold: 0.5

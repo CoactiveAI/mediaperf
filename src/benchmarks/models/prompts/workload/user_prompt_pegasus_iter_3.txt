@@ -1,0 +1,93 @@
+Analyze this video advertisement and assign relevant tags with confidence scores.
+
+ALLOWED TAGS (select ONLY from these - enhanced definitions):
+- restaurant: Dining establishments including sit-down restaurants, cafes, fast food chains, food delivery services. Look for dining venues, food being served, restaurant branding.
+- chocolate: Chocolate products and sweet treats including chocolate bars, cookies, candy, ice cream, desserts, baked goods.
+- chips: Savory and sweet snacks including potato chips, tortilla chips, pretzels, nuts, dried fruit, gum, cereals, yogurt, instant soups.
+- seasoning: Cooking seasonings, spices, condiments, sauces, ketchup, mustard, salad dressings.
+- petfood: Pet food and treats for domestic animals. May show pets eating, product packaging, pet health, owner-pet bonding.
+- alcohol: Alcoholic beverages including beer, wine, spirits, cocktails. Often emphasizes social drinking, celebrations, lifestyle branding.
+- coffee: Coffee and tea beverages including ground coffee, instant coffee, pods, tea bags, ready-to-drink. Features morning rituals, café settings.
+- soda: Non-alcoholic beverages including sodas, juices, milk, energy drinks, bottled water, sports drinks.
+- cars: Automobiles and automotive services including vehicle sales, auto parts, insurance, repair, gasoline, motor oil, accessories.
+- electronics: Consumer electronics including computers, laptops, tablets, smartphones, TVs, cameras, gaming consoles, wearables.
+- phone_tv_internet_providers: Telecommunications including mobile carriers, cable TV, internet providers, satellite services.
+- financial: Financial services including banks, credit cards, investment, insurance, mortgages, retirement accounts.
+- education: Educational institutions including universities, colleges, K-12 schools, online learning, tutoring, educational apps.
+- security: Security services including home security, surveillance, anti-theft devices, cybersecurity, safety training.
+- software: Software and platforms including SaaS, mobile apps, streaming, job boards, productivity tools, booking platforms.
+- other_service: Miscellaneous services including dating apps, tax prep, legal services, loans, faith organizations, catering.
+- beauty: Beauty and personal care including cosmetics, deodorants, toothpaste, skincare, haircare, shaving products.
+- healthcare: Healthcare services including hospitals, health insurance, prescription drugs, OTC medications, vitamins, medical devices.
+- clothing: Apparel and accessories including jeans, dresses, shirts, footwear, eyewear, handbags, watches, jewelry.
+- baby: Baby products including baby food, bottles, sippy cups, diapers, wipes, baby skincare, nursery items.
+- game: Games and toys including board games, video games, mobile gaming, toy products, collectibles.
+- cleaning: Cleaning and laundry including detergents, fabric softeners, dish soap, cleaners, disinfectants, paper towels, tissues.
+- home_improvement: Home improvement including furniture, décor, lawn care, plumbing, painting, remodeling, DIY tools.
+- home_appliance: Home appliances including coffee makers, dishwashers, cookware, vacuums, climate control, refrigerators.
+- travel: Travel and vacation including airlines, cruises, theme parks, hotels, travel agencies, vacation packages.
+- media: Media entertainment including TV shows, films, streaming, live performances, books, audiobooks, publications.
+- sports: Sports equipment, athletic apparel, fitness products, sporting activities.
+- shopping: Retail experiences including department stores, pharmacies, groceries, e-commerce, shopping centers.
+- gambling: Gambling including lottery, casinos, sports betting, online gambling.
+- environment: Environmental themes including conservation, anti-pollution, sustainability, eco-friendly products.
+- animal_right: Animal rights including anti-cruelty campaigns, animal protection, ethical treatment.
+- human_right: Human rights including civil rights, equality, humanitarian causes.
+- safety: Public safety including traffic safety, fire prevention, accident prevention, emergency preparedness.
+- smoking_alcohol_abuse: Substance abuse prevention including anti-smoking, alcoholism awareness, addiction treatment.
+- domestic_violence: Domestic violence awareness, prevention, victim support.
+- self_esteem: Self-esteem building, anti-bullying, cyberbullying prevention, body positivity, mental health.
+- political: Political advertising including candidates, campaigns, policy advocacy, opposition messaging.
+- charities: Charitable organizations including nonprofits, humanitarian aid, disaster relief, donation appeals.
+- active: Energetic tone through fast-paced editing, movement, physical activities, vibrant colors, enthusiastic performances.
+- afraid: Fear through dark imagery, dangerous situations, threatening visuals, suspenseful tension.
+- alarmed: Concern through problem scenarios, worried expressions, tense situations, urgent messaging.
+- alert: Heightened awareness through discovery moments, focused attention, investigative behavior, curious exploration.
+- amazed: Surprise through dramatic reveals, unexpected transformations, impressive demonstrations, wide-eyed reactions.
+- amused: Humor through comedic situations, playful interactions, laughing people, witty gags, feel-good entertainment.
+- angry: Anger through conflict, frustrated characters, confrontational interactions, problem situations, annoyed expressions.
+- calm: Tranquility through serene settings, slow pacing, soft lighting, relaxing environments, gentle movements.
+- cheerful: Happiness through smiling faces, celebrations, bright visuals, positive resolutions, joyful interactions.
+- confident: Confidence through successful characters, empowered individuals, strong posture, achievement moments.
+- conscious: Mindfulness through thoughtful consideration, planning, informed decisions, preparedness, intentional choices.
+- creative: Creativity through artistic activities, crafting processes, inventive solutions, imaginative scenarios.
+- disturbed: Shocking content through disturbing imagery, provocative visuals, uncomfortable scenarios, challenging content.
+- eager: Desire through appetizing food close-ups, refreshing beverage shots, passionate expressions, craving-inducing visuals.
+- educated: Intelligence through experts, educational content, data presentation, sophisticated messaging, knowledge demonstration.
+- emotional: Emotional impact through touching narratives, sentimental moments, nostalgic imagery, heartfelt storytelling.
+- empathetic: Compassion through supportive relationships, caring interactions, community connection, inclusive representation.
+- fashionable: Fashion aesthetics through trendy styling, elegant visuals, beauty-centric cinematography, sophisticated design.
+- feminine: Feminine aesthetic through soft colors, graceful movements, women-centric products, female empowerment.
+- grateful: Gratitude through appreciation scenes, grateful responses, thank-you moments, recognition of benefits.
+- inspired: Motivation through achievement narratives, empowering messages, hope-filled scenarios, overcoming obstacles.
+- jealous: Envy through comparison scenarios, status competition, wanting others' possessions, keeping-up themes.
+- loving: Love through romantic couples, family bonding, expressions of care, intimate moments, relationship narratives.
+- manly: Masculine aesthetic through rugged visuals, masculine activities, male bonding, strength emphasis.
+- persuaded: Persuasion through before/after demonstrations, testimonials, transformative results, product efficacy proof.
+- pessimistic: Skepticism through questioning characters, problem-heavy scenarios, doubt-before-belief narratives.
+- proud: Pride through achievement celebrations, patriotic imagery, heritage appreciation, accomplishment moments.
+- sad: Sadness through crying, sorrowful expressions, loss scenarios, depressing situations, lonely characters.
+- thrifty: Value-consciousness through price emphasis, deal announcements, budget messaging, cost comparison, savings focus.
+- youthful: Youth through young people/children, playful energy, age-defying claims, youthful enthusiasm.
+
+INSTRUCTIONS:
+1. Analyze complete video from start to finish, noting how content evolves
+2. Consider narrative structure and key turning points
+3. Identify primary product/service categories - highest confidence
+4. Assess dominant emotional tones based on visual cues, expressions, pacing
+5. Apply confidence scores systematically:
+   - High (0.8-1.0): Central to ad's core message, sustained visual presence
+   - Medium (0.5-0.79): Clearly present and relevant but not primary
+   - Low (0.3-0.49): Appears in specific moments or as background element
+6. For emotional tags, distinguish emotions shown vs. emotions ad evokes
+7. When multiple similar tags apply, select most specific and prominent
+8. Only include tags with clear visual evidence
+9. Respond with ONLY valid JSON
+
+REQUIRED JSON FORMAT:
+{{
+  "tags": [
+    {{"tag": "tag_from_allowed_list", "confidence": 0.95}},
+    {{"tag": "another_allowed_tag", "confidence": 0.75}}
+  ]
+}}

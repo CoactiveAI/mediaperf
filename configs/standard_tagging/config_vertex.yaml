@@ -1,0 +1,74 @@
+# Supports: gemini-2.5-pro, gemini-2.5-flash, gemini-3.0-pro, gemini-3.1-flash-lite (update model_id, model_name, labels)
+
+logging:
+  level: "INFO"
+
+tracking:
+  return_usage: true
+  progress_interval: 50
+
+pricing:
+  input_per_1m_tokens: 1.25
+  output_per_1m_tokens: 10.00
+
+video_source:
+  type: "gcs"
+  mode: "from_gcs"
+  gcs:
+    bucket: "your-gcs-bucket"
+    prefix: "YoutubeAdvertisements"
+
+video_selection:
+  mode: "all"
+  random_count: 100
+  random_seed: 42
+
+pipeline:
+  preprocessor:
+    type: null
+
+  tagger:
+    type: "vertex_vision"
+    config:
+      model_id: "gemini-2.5-pro"
+      model_name: "gemini-2_5-pro"
+      project_id: null
+      location: "us-central1"
+      labels:
+        project: "your_project_name"
+      inference_params:
+        max_output_tokens: 2048
+        temperature: 0.3
+        top_p: 0.1
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/video_level_tags_vertex.jsonl"
+
+  metrics:
+    type: "multilabel_classification"
+    config:
+      pred_key: "video_level_tags"
+      gt_key: "tags"
+      exclude_tags: ['funny', 'effective', 'exciting']
+      exclude_failures: true
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+inference:
+  threshold: 0.5
+  ignore_threshold: true
+  test_tags: null
+
+paths:
+  inputs_dir: "data/inputs"
+  label_file: "YoutubeAdvertisementsLabels.json"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"
+
+labels:
+  gt_threshold: 0.5

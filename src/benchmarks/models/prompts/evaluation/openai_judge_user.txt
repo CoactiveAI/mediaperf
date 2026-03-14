@@ -1,0 +1,18 @@
+Please evaluate the following generated summary by comparing it against the reference (ground truth) summary.
+
+**Evaluation Criteria:**
+{criteria}
+
+**Reference Summary (Ground Truth):**
+{ground_truth}
+
+**Generated Summary (To Evaluate):**
+{generated_summary}
+
+**Instructions:**
+1. Evaluate the generated summary against each criterion listed above
+2. Assign a score from 1-5 for each criterion
+3. Provide brief reasoning (1-2 sentences) explaining each score
+4. Provide a brief overall assessment of the generated summary's quality
+
+Please provide your evaluation in the specified JSON format.

@@ -1,0 +1,36 @@
+# Preprocessing config for NVIDIA model (720p videos, duration-based selection)
+# Purpose: Sample frames from 720p videos for NVIDIA Bedrock inference
+# Usage: python scripts/preprocess_frames_only.py --config configs/config_preprocess_nvidia_720p.yaml
+
+task_type: "preprocessing_only"
+
+video_source:
+  type: "s3"
+  mode: "local"  # Download videos for frame extraction
+  s3:
+    bucket: "benchmarks-project-dev"
+    prefix: "youtube_ads_dataset_720p_h264/"  # Use 720p converted videos
+    region: "us-east-2"
+
+video_selection:
+  mode: "duration_based"
+  target_minutes: 1000
+  metadata_file: "data/inputs/youtube_ads_video_metadata.json"
+  order: "longest"  # Start with longest videos first (or "shortest")
+  resolution: null  # Optional: filter by resolution
+
+pipeline:
+  preprocessor:
+    type: "frame_sampling"
+    config:
+      x_frames: 16
+      output_format: "bytes"  # Output as raw bytes for NVIDIA model
+      storage:
+        type: "s3"
+        config:
+          bucket: "benchmarks-project-dev"
+          prefix: "frames_720p"
+          region_name: "us-east-2"
+
+paths:
+  cache_dir: "data/cache/videos_720p_test"  # Separate cache for 720p videos

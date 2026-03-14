@@ -1,0 +1,86 @@
+Analyze this video and assign relevant tags with confidence scores.
+
+ALLOWED TAGS (select ONLY from these):
+- restaurant: This content is about restaurants, cafe, fast food.
+- chocolate: This content is about chocolate, cookies, candy, ice cream.
+- chips: This content is about chips, snacks, nuts, fruit, gum, cereal, yogurt, soups.
+- seasoning: This content is about seasoning, condiments, ketchup.
+- petfood: This content is about pet food.
+- alcohol: This content is about alcohol.
+- coffee: This content is about coffee, tea.
+- soda: This content is about soda, juice, milk, energy drinks, water.
+- cars: This content is about cars, automobiles. It can also include car sales, auto parts, car insurance, car repair, gas, motor oil, etc..
+- electronics: This content is about electronics. It can also include computers, laptops, tablets, cellphones, tvs, etc..
+- phone_tv_internet_providers: This content is about phone, tv and internet service providers.
+- financial: This content is about financial services. It can also include banks, credit cards, investment firms, etc..
+- education: This content is about education. It can also include universities, colleges, kindergarten, online degrees, etc..
+- security: This content is about security and safety services. It can also include anti-theft, safety courses, etc..
+- software: This content is about software. It can also include internet radio, streaming, job search website, grammar correction, travel planning, etc..
+- other_service: This content is about other services. It can also include dating, tax, legal, loan, religious, printing, catering, etc..
+- beauty: This content is about beauty products and cosmetics. It can also include deodorants, toothpaste, makeup, hair products, laser hair removal, etc..
+- healthcare: This content is about healthcare and medications. It can also include hospitals, health insurance, allergy, cold remedy, home tests, vitamins.
+- clothing: This content is about clothing and accessories. It can also include jeans, shoes, eye glasses, handbags, watches, jewelry.
+- baby: This content is about baby products. It can also include baby food, sippy cups, diapers, etc..
+- game: This content is about games and toys. It can also include including video and mobile games.
+- cleaning: This content is about cleaning products. It can also include detergents, fabric softeners, soap, tissues, paper towels, etc..
+- home_improvement: This content is about home improvements and repairs. It can also include furniture, decoration, lawn care, plumbing, etc..
+- home_appliance: This content is about home appliances. It can also include coffee makers, dishwashers, cookware, vacuum cleaners, heaters, music players, etc..
+- travel: This content is about vacation and travel. It can also include airlines, cruises, theme parks, hotels, travel agents, etc..
+- media: This content is about media and arts. It can also include tv shows, movies, musicals, books, audio books, etc..
+- sports: This content is about sports equipment and activities.
+- shopping: This content is about shopping. It can also include department stores, drug stores, groceries, etc..
+- gambling: This content is about gambling. It can also include lotteries, casinos, etc..
+- environment: This content is about environment, nature, pollution, wildlife.
+- animal_right: This content is about animal rights, animal abuse.
+- human_right: This content is about human rights.
+- safety: This content is about safety, safe driving, fire safety.
+- smoking_alcohol_abuse: This content is about smoking, alcohol abuse.
+- domestic_violence: This content is about domestic violence.
+- self_esteem: This content is about self esteem, bullying, cyber bullying.
+- political: This content is about political candidates. It can also include support or opposition.
+- charities: This content is about charities.
+- active: This content is about active. It can also include energetic, adventurous, vibrant, enthusiastic, playful.
+- afraid: This content is about afraid. It can also include horrified, scared, fearful.
+- alarmed: This content is about alarmed. It can also include concerned, worried, anxious, overwhelmed.
+- alert: This content is about alert. It can also include attentive, curious.
+- amazed: This content is about amazed. It can also include surprised, astonished, awed, fascinated, intrigued.
+- amused: This content is about amused. It can also include humored, laughing.
+- angry: This content is about angry. It can also include annoyed, irritated.
+- calm: This content is about calm. It can also include soothed, peaceful, comforted, fullfilled, cozy.
+- cheerful: This content is about cheerful. It can also include delighted, happy, joyful, carefree, optimistic.
+- confident: This content is about confident. It can also include assured, strong, healthy.
+- conscious: This content is about conscious. It can also include aware, thoughtful, prepared.
+- creative: This content is about creative. It can also include inventive, productive.
+- disturbed: This content is about disturbed. It can also include disgusted, shocked.
+- eager: This content is about eager. It can also include hungry, thirsty, passionate.
+- educated: This content is about educated. It can also include informed, enlightened, smart, savvy, intelligent.
+- emotional: This content is about emotional. It can also include vulnerable, moved, nostalgic, reminiscent.
+- empathetic: This content is about empathetic. It can also include sympathetic, supportive, understanding, receptive.
+- fashionable: This content is about fashionable. It can also include trendy, elegant, beautiful, attractive, sexy.
+- feminine: This content is about feminine. It can also include womanly, girlish.
+- grateful: This content is about grateful. It can also include thankful.
+- inspired: This content is about inspired. It can also include motivated, ambitious, empowered, hopeful, determined.
+- jealous: This content is about jealous.
+- loving: This content is about loving. It can also include loved, romantic.
+- manly: This content is about manly.
+- persuaded: This content is about persuaded. It can also include impressed, enchanted, immersed.
+- pessimistic: This content is about pessimistic. It can also include skeptical.
+- proud: This content is about proud. It can also include patriotic.
+- sad: This content is about sad. It can also include depressed, upset, betrayed, distant.
+- thrifty: This content is about thrifty. It can also include frugal.
+- youthful: This content is about youthful. It can also include childlike.
+
+INSTRUCTIONS:
+1. Watch the entire video carefully
+2. Select tags that accurately describe the video content
+3. Assign confidence scores (0.0 to 1.0) based on how prominently each tag applies
+4. Only include tags that are clearly present
+5. Respond with ONLY valid JSON (no other text)
+
+REQUIRED JSON FORMAT:
+{{
+  "tags": [
+    {{"tag": "tag_from_allowed_list", "confidence": 0.95}},
+    {{"tag": "another_allowed_tag", "confidence": 0.75}}
+  ]
+}}

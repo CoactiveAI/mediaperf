@@ -1,0 +1,19 @@
+Analyze these frames from a video and select all applicable tags for the entire video.
+
+ALLOWED TAGS (select ONLY from these):
+{tags_formatted}
+
+INSTRUCTIONS:
+1. Watch the frames carefully
+2. Select tags that accurately describe the video content across all frames
+3. Assign confidence scores (0.0 to 1.0) based on how prominently each tag applies
+4. Only include tags that are clearly present
+5. Respond with ONLY valid JSON (no other text)
+
+REQUIRED JSON FORMAT:
+{{
+  "tags": [
+    {{"tag": "tag_from_allowed_list", "confidence": 0.95}},
+    {{"tag": "another_allowed_tag", "confidence": 0.75}}
+  ]
+}}

@@ -1,0 +1,72 @@
+[project]
+name = "benchmarks"
+version = "0.1.0"
+description = "Benchmarking framework for multimodal models"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "boto3>=1.35.0",
+    "google-cloud-storage>=2.18.0",
+    "jsonlines>=4.0.0",
+    "openai>=2.7.2",
+    "opencv-python>=4.12.0.88",
+    "python-dotenv>=1.2.1",
+    "pyyaml>=6.0.0",
+    "scikit-learn>=1.7.2",
+    "pydantic>=2.0.0",
+    "loguru>=0.7.3",
+    "google-genai>=1.50.1",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.1.0",
+    "matplotlib>=3.10.8",
+    "pandas>=2.3.3",
+    "seaborn>=0.13.2",
+    "ruff>=0.15.1",
+    "pre-commit>=3.6.0",
+]
+test = [
+    "pytest>=9.0.0",
+    "pytest-cov>=7.0.0",
+    "pytest-mock>=3.15.0",
+]
+
+[tool.ruff]
+line-length = 120
+exclude = [
+    "venv",
+    ".venv",
+    "**/.ipynb_checkpoints",
+]
+
+[tool.ruff.lint]
+select = [
+    "F",   # Pyflakes - unused imports, undefined variables
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "I",   # isort - import sorting
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["benchmarks"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "double"
+line-ending = "lf"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "fast: Fast tests that run in <5 seconds",
+    "medium: Medium tests that run in <30 seconds",
+]

@@ -1,0 +1,53 @@
+# Judge models: currently only from GPT family. This config can evaluate output summaries of any other model, only need to change paths.summaries_file
+task_type: "summary_evaluation"
+
+logging:
+  level: "DEBUG"
+
+tracking:
+  return_usage: true
+  progress_interval: 1
+
+pricing:
+  input_per_1m_tokens: 2.50
+  output_per_1m_tokens: 10.00
+
+pipeline:
+  judge:
+    type: "openai_judge"
+    config:
+      model_id: "gpt-5.1"
+      model_name: "gpt-5_1"
+      api_key_env: "OPENAI_API_KEY"
+      reasoning_effort: "medium"
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/evaluation_results_test.jsonl"
+
+evaluation:
+  aggregation_method: "sum"
+
+  criteria:
+    - name: "Factual Accuracy"
+      description: "How accurately does the generated summary capture the explicit, factual content from the reference summary? Does it include correct information about the product/brand, actions, visuals, and spoken/on-screen text without introducing hallucinations, contradictions, or misrepresentations of what was shown?"
+
+    - name: "Structural Alignment"
+      description: "Does the generated summary follow the same structural template as the reference (product/brand introduction → key scenes/actions → explicit message/feature → optional tone statement)? Is the information organized in a similar logical flow and sentence structure?"
+
+    - name: "Completeness"
+      description: "Does the generated summary cover all essential elements from the reference including the product/brand name, key scenes or actions, and the explicit message or feature being highlighted? Are there significant omissions of important factual details that appear in the reference?"
+
+    - name: "Objectivity & Language Style"
+      description: "Does the generated summary maintain the same factual, observational style as the reference? Does it avoid interpretive language, analytical phrases (e.g., 'aims to,' 'evokes,' 'suggests'), audience psychology, or emotional interpretation? Does it use present tense and third person like the reference?"
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+paths:
+  summaries_file: "data/outputs/dummy_summarization_predictions.jsonl"
+  ground_truth_file: "data/inputs/summarization_ground_truth.jsonl"
+  outputs_dir: "data/outputs"

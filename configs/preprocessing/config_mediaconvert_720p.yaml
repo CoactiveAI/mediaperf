@@ -1,0 +1,35 @@
+# MediaConvert config: Convert all videos to H.264 + downscale to 720p max
+# Purpose: Prepare videos for NVIDIA model (requires ≤720p resolution)
+# Usage: python scripts/convert_videos_mediaconvert.py --config configs/mediaconvert/config_mediaconvert_720p.yaml
+
+task_type: "mediaconvert"
+
+video_source:
+  type: "s3"
+  mode: "from_s3"  # Use S3 URIs directly
+  s3:
+    bucket: "benchmarks-project-dev"
+    prefix: "youtube_ads_dataset/"
+    region: "us-east-2"
+
+video_selection:
+  mode: "all"  # Convert all videos in the source prefix
+
+mediaconvert:
+  output_prefix: "youtube_ads_dataset_720p_h264/"
+  role_arn: "arn:aws:iam::443102425374:role/MediaConvertRole"
+  quality: "SINGLE_PASS"  # Faster/cheaper than SINGLE_PASS_HQ
+  max_bitrate: 5000000  # 5 Mbps
+  max_height: 720  # Downscale videos >720p to 720p (maintains aspect ratio)
+  rate_limit: 10  # Jobs per second
+  poll_interval: 30  # Seconds between status checks
+  progress_interval: 50  # Log progress every N videos
+  check_codec: false  # Process all videos regardless of codec
+  avg_duration: 90.0  # Average duration in seconds (for cost estimate)
+
+  # Cost allocation tags (for AWS Cost Explorer filtering)
+  tags:
+    project: "benchmarks_project_mediaconvert_to_h264_720p"
+
+paths:
+  outputs_dir: "data/outputs"

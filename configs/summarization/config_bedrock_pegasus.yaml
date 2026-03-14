@@ -1,0 +1,57 @@
+# TwelveLabs Pegasus via Bedrock invoke_model API
+
+task_type: "summarization"
+
+logging:
+  level: "INFO"
+
+tracking:
+  return_usage: true
+  progress_interval: 50
+
+pricing:
+  input_per_1m_tokens: 0.0
+  output_per_1m_tokens: 7.5
+
+video_source:
+  type: "s3"
+  mode: "from_s3"
+  s3:
+    bucket: "your-s3-bucket"
+    prefix: "youtube_ads_dataset"
+    region: "us-east-1"
+
+video_selection:
+  mode: "all"
+
+pipeline:
+  preprocessor:
+    type: null
+
+  summarizer:
+    type: "bedrock_summarizer"
+    config:
+      model_id: "us.twelvelabs.pegasus-1-2-v1:0"
+      model_name: "pegasus-1-2"
+      region_name: "us-east-1"
+      api_type: "invoke"
+      account_id: "123456789012"
+      inference_params:
+        maxTokens: 1000
+        temperature: 0.3
+      user_prompt_file: "universal_user.txt"
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/video_summaries_pegasus.jsonl"
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+paths:
+  inputs_dir: "data/inputs"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"

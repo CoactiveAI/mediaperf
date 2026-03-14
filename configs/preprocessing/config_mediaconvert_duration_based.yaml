@@ -1,0 +1,38 @@
+# MediaConvert config: Convert videos totaling 1000 minutes (duration-based selection)
+# Usage: python scripts/convert_videos_mediaconvert.py --config configs/mediaconvert/config_mediaconvert_duration_based.yaml
+
+task_type: "mediaconvert"
+
+video_source:
+  type: "s3"
+  mode: "from_s3"  # Use S3 URIs directly
+  s3:
+    bucket: "benchmarks-project-dev"
+    prefix: "youtube_ads_dataset/"
+    region: "us-east-2"
+
+video_selection:
+  mode: "duration_based"
+  target_minutes: 1000  # Convert videos totaling 1000 minutes
+  metadata_file: "data/inputs/youtube_ads_video_metadata.json"
+  order: "longest"  # Start with longest videos first (or "shortest")
+  resolution: null  # Optional: filter by resolution (e.g., "1920x1080")
+
+mediaconvert:
+  output_prefix: "youtube_ads_dataset_h264_mediaconvert/"
+  role_arn: "arn:aws:iam::443102425374:role/MediaConvertRole"
+  quality: "SINGLE_PASS_HQ"  # Higher quality for important videos
+  max_bitrate: 5000000  # 5 Mbps
+  # max_height: 720  # Optional: downscale videos >720p to 720p (maintains aspect ratio)
+  rate_limit: 10  # Jobs per second
+  poll_interval: 30  # Seconds between status checks
+  progress_interval: 50  # Log progress every N videos
+  check_codec: false  # Skip videos already in H.264
+  avg_duration: 90.0  # Average duration in seconds (for cost estimate)
+
+  # Cost allocation tags (for AWS Cost Explorer filtering)
+  tags:
+    project: "benchmarks_project_mediaconvert_to_h264"
+
+paths:
+  outputs_dir: "data/outputs"

@@ -1,0 +1,101 @@
+# TwelveLabs Pegasus via Bedrock invoke_model API (uses pegasus-specific prompts for iter 3-5)
+
+task_type: "cost_benchmark"
+
+logging:
+  level: "INFO"
+
+pricing:
+  input_per_1m_tokens: 0.0
+  output_per_1m_tokens: 7.5
+
+tracking:
+  return_usage: true
+  progress_interval: 50
+
+cost_benchmark:
+  iterations:
+    - iteration: 1
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_1.txt"
+      skip_tag_injection: true
+
+    - iteration: 2
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_2.txt"
+      skip_tag_injection: true
+
+    - iteration: 3
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_pegasus_iter_3.txt"
+      skip_tag_injection: true
+
+    - iteration: 4
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_pegasus_iter_4.txt"
+      skip_tag_injection: true
+
+    - iteration: 5
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_pegasus_iter_5.txt"
+      skip_tag_injection: true
+
+  metrics_output_path: "cost_benchmark_metrics_bedrock.json"
+
+video_source:
+  type: "s3"
+  mode: "from_s3"
+  s3:
+    bucket: "your-s3-bucket"
+    prefix: "youtube_ads_dataset"
+    region: "us-east-1"
+
+video_selection:
+  mode: "duration_based"
+  target_minutes: 1000
+  metadata_file: "data/inputs/youtube_ads_video_metadata.json"
+  order: "longest"
+  resolution: null
+
+pipeline:
+  preprocessor:
+    type: null
+
+  tagger:
+    type: "bedrock_vision"
+    config:
+      model_id: "us.twelvelabs.pegasus-1-2-v1:0"
+      model_name: "pegasus-1-2"
+      region_name: "us-east-1"
+      api_type: "invoke"
+      account_id: "123456789012"
+      inference_params:
+        maxTokens: 4000
+        temperature: 0.3
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/cost_benchmark_results.jsonl"
+
+  metrics:
+    type: "multilabel_classification"
+    config:
+      pred_key: "video_level_tags"
+      gt_key: "tags"
+      exclude_tags: ['funny', 'effective', 'exciting']
+      exclude_failures: true
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+inference:
+  threshold: 0.5
+  ignore_threshold: true
+  test_tags: null
+
+paths:
+  inputs_dir: "data/inputs"
+  label_file: "YoutubeAdvertisementsLabels.json"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"
+
+labels:
+  gt_threshold: 0.5

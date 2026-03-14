@@ -1,0 +1,86 @@
+Analyze this video advertisement and assign relevant tags with confidence scores.
+
+ALLOWED TAGS (select ONLY from these - enhanced definitions):
+- restaurant: Dining establishments. Look for: signage, food service, dining scenes.
+- chocolate: Chocolate and sweet confectionery. Look for: packaging, melting chocolate, indulgent eating.
+- chips: Snack foods including chips, pretzels, nuts, cereals. Look for: snack packaging, casual eating.
+- seasoning: Cooking seasonings, sauces, condiments. Look for: bottles in cooking, sauces being poured.
+- petfood: Pet food including kibble, wet food, treats. Look for: pet food packaging, pets eating.
+- alcohol: Alcoholic beverages. Look for: bar settings, toasting, social drinking.
+- coffee: Coffee and tea products. Look for: brewing/pouring, steaming cups, café settings.
+- soda: Non-alcoholic beverages. Look for: condensation, pouring, refreshing moments.
+- cars: Automotive vehicles and services. Look for: vehicles driving, dealerships.
+- electronics: Consumer electronics. Look for: devices in use, screens, demonstrations.
+- phone_tv_internet_providers: Telecommunications. Look for: coverage maps, streaming, bundled offers.
+- financial: Financial services. Look for: bank buildings, cards, advisors, mobile apps.
+- education: Educational institutions. Look for: classrooms, graduations, students learning.
+- security: Security services. Look for: cameras, alarm panels, locks.
+- software: Software applications. Look for: interfaces, app screens, dashboards.
+- other_service: Miscellaneous services. Look for: service-specific scenarios.
+- beauty: Beauty and hygiene products. Look for: makeup application, skincare, before/after.
+- healthcare: Healthcare services. Look for: medical facilities, doctors/nurses, pill bottles.
+- clothing: Apparel and accessories. Look for: fashion items worn, stores, styling.
+- baby: Baby products. Look for: babies/infants, nursery, feeding, diaper changes.
+- game: Games and toys. Look for: people playing, toy displays, gaming screens.
+- cleaning: Household cleaning and laundry. Look for: cleaning activities, sparkling surfaces.
+- home_improvement: Home renovation. Look for: home interiors, furniture, renovation.
+- home_appliance: Household appliances. Look for: appliances in use, cooking scenarios.
+- travel: Travel and tourism. Look for: airports, cruise ships, hotels, landmarks.
+- media: Media entertainment. Look for: TV/movie scenes, streaming interfaces.
+- sports: Sports equipment, athletic gear. Look for: athletes in action, equipment.
+- shopping: Retail experiences. Look for: store aisles, carts, checkouts, shopping bags.
+- gambling: Gambling and wagering. Look for: slot machines, casino environments.
+- environment: Environmental conservation. Look for: landscapes, wildlife, recycling symbols.
+- animal_right: Animal rights advocacy. Look for: animals being helped, shelters.
+- human_right: Human rights and justice. Look for: diverse people, equality symbols.
+- safety: Public safety campaigns. Look for: safety demonstrations, warnings.
+- smoking_alcohol_abuse: Anti-smoking/substance abuse prevention. Look for: smoking with warnings, recovery.
+- domestic_violence: Domestic violence awareness. Look for: conflict scenarios, support services.
+- self_esteem: Self-confidence and anti-bullying. Look for: bullying scenarios, transformation.
+- political: Political advertising. Look for: candidates, campaign logos, voting imagery.
+- charities: Charitable organizations. Look for: charity logos, donation calls, volunteers.
+- active: High-energy via rapid editing, movement, vibrant colors, enthusiastic body language.
+- afraid: Fear via dark/ominous imagery, threatening situations, suspenseful pacing.
+- alarmed: Worry via problem scenarios, worried expressions, urgent pacing.
+- alert: Attentiveness via discovery moments, focused attention, "aha moments."
+- amazed: Astonishment via dramatic reveals, transformations, jaw-dropping visuals.
+- amused: Humor via comedic scenarios, laughing people, witty jokes.
+- angry: Anger via conflict scenes, frustrated expressions, heated situations.
+- calm: Serenity via peaceful landscapes, slow editing, soft lighting, meditation/yoga.
+- cheerful: Happiness via smiling faces, celebrations, bright colors, joyful interactions.
+- confident: Self-assurance via successful individuals, empowered postures, achievements.
+- conscious: Deliberate awareness via thoughtful expressions, informed decision-making.
+- creative: Creativity via artistic activities, crafting, inventive problem-solving.
+- disturbed: Shocking content via disturbing imagery, provocative visuals, taboo subjects.
+- eager: Intense desire via appetizing food (glistening, steam), refreshing beverages (condensation).
+- educated: Intelligence via experts (doctors, professors), educational infographics.
+- emotional: Deep vulnerability via touching narratives, sentimental storytelling, nostalgic imagery.
+- empathetic: Compassion via supportive relationships, helping gestures, solidarity.
+- fashionable: High fashion via runway styling, elegant aesthetics, styled models.
+- feminine: Feminine-coded via soft pastels, graceful movements, female empowerment.
+- grateful: Appreciation via thank-you gestures, grateful expressions, gift-receiving.
+- inspired: Motivational aspiration via inspirational journeys, achievement stories.
+- jealous: Envy via social comparison, status displays, luxury showcases.
+- loving: Love via romantic couples, family bonding, affectionate touching, tender moments.
+- manly: Masculine-coded via rugged outdoors, masculine activities, dark colors.
+- persuaded: Strong conviction via before/after transformations, testimonials, results.
+- pessimistic: Skepticism via questioning expressions, cynical perspectives, disbelief.
+- proud: Pride via achievement celebrations, patriotic symbols, heritage displays.
+- sad: Melancholy via visible tears/crying, dejected expressions, gloomy tones.
+- thrifty: Value-consciousness via price tags, discount displays, savings callouts.
+- youthful: Youth via children/teenagers, playful energy, age-reversal comparisons.
+
+ADVANCED ANALYSIS FRAMEWORK:
+1. Narrative: Act 1 (0-30%) hook, Act 2 (30-70%) demo, Act 3 (70-100%) payoff. Track sustained vs. segment tags.
+2. Visual language: Colors (warm=energy, cool=calm), pace (fast=active, slow=calm), angles (low=power, close=emotion), lighting (soft=gentle, bright=cheerful).
+3. Confidence: 0.95-1.0 (dominant), 0.85-0.94 (primary), 0.70-0.84 (secondary), 0.55-0.69 (supporting), 0.40-0.54 (minor).
+4. Context: Demographics, persuasion type, literal vs. symbolic content.
+5. Distribution: 2-4 high, 3-6 medium tags.
+
+REQUIRED JSON FORMAT:
+{{
+  "tags": [
+    {{"tag": "tag_from_allowed_list", "confidence": 0.95}},
+    {{"tag": "another_allowed_tag", "confidence": 0.75}}
+  ]
+}}

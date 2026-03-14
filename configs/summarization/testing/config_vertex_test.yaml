@@ -1,0 +1,60 @@
+# Supports: gemini-2.5-pro, gemini-2.5-flash, gemini-3.0-pro, gemini-3.1-flash-lite (update model_id, model_name, labels)
+
+task_type: "summarization"
+
+logging:
+  level: "DEBUG"
+
+tracking:
+  return_usage: true
+  progress_interval: 1
+
+pricing:
+  input_per_1m_tokens: 1.25
+  output_per_1m_tokens: 10.00
+
+video_source:
+  type: "gcs"
+  mode: "from_gcs"
+  gcs:
+    bucket: "your-gcs-bucket"
+    prefix: "YoutubeAdvertisements"
+
+video_selection:
+  mode: "random"
+  random_count: 5
+  random_seed: 42
+
+pipeline:
+  preprocessor:
+    type: null
+
+  summarizer:
+    type: "vertex_summarizer"
+    config:
+      model_id: "gemini-2.5-pro"
+      model_name: "gemini-2_5-pro"
+      project_id: null
+      location: "us-central1"
+      labels:
+        project: "your_project_name"
+      inference_params:
+        max_output_tokens: 8192
+        temperature: 0.3
+        top_p: 0.1
+      user_prompt_file: "universal_user.txt"
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/video_summaries_gemini.jsonl"
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+paths:
+  inputs_dir: "data/inputs"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"

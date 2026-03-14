@@ -1,0 +1,110 @@
+# Annotation Guidelines
+These guidelines are required for all video summaries. They are designed to ensure consistency, neutrality, and scalability. Do not interpret beyond what is explicitly shown or stated. Very few videos will not qualify for this structure.
+
+## 1. Required Summary Template 
+Use the structure below as your **default**. Slight variation in length is allowed **if necessary to avoid omitting important information.**
+
+**Sentence 1**
+An advertisement for [PRODUCT / BRAND / CAMPAIGN] shows [WHO + WHAT HAPPENS].
+
+**Sentence 2**
+The ad features [KEY SCENES / ACTIONS / VISUALS].
+
+**Sentence 3**
+It highlights [EXPLICIT MESSAGE / FEATURE / IDEA SHOWN OR STATED].
+
+**Sentence 4 (if tone is clear)**
+The ad is presented in a [TONE] tone.
+
+**Length Guidelines**
+* Target 3–4 sentences
+* Up to 5 sentences is acceptable if required to include explicit, important details
+* Do **not** add filler or interpretation to increase length
+
+**Rules**
+* Third person, present tense only
+* Keep each sentence focused on one function
+* If something is unclear, keep it simple and factual rather than leaving it out
+
+## 2. Tone (Choose ONE Only)
+You may label tone, but **do not explain it.**
+
+Allowed tones:
+* serious
+* reflective
+* uplifting
+* humorous
+* somber
+* informative
+* dramatic
+* cinematic
+* inspirational
+
+Do not describe emotional impact or how viewers feel.
+
+## 3. What You ARE Allowed to Include
+Include information **only if it is explicitly shown or stated:**
+* Spoken narration or dialogue
+* On-screen text
+* Clearly visible actions, objects, or environments
+* Explicit calls to action (vote, donate, contact, support)
+
+You may quote or paraphrase **explicit language** from the ad.
+
+## 4. What You Are NOT Allowed to Include (Auto-Fail)
+Do **not** include:
+* Audience age, gender, emotions, or psychology
+* Brand intent or marketing goals
+* Symbolism or interpretation
+* Persuasion or emotional manipulation analysis
+
+Do **NOT** use these phrases:
+* aims to
+* tries to
+* associates the brand with
+* evokes / instills
+* suggests that
+* resonates with
+* targets / geared toward
+* would appeal to
+
+If any appear, the summary must be revised.
+
+## 5. Audience References (Very Limited)
+Audience references are allowed **only by interest**, never by age or emotion.
+
+Allowed:
+* viewers interested in the product
+* players of strategy games
+* people interested in environmental issues
+
+Not allowed:
+* young people
+* older audiences
+* people who feel inspired
+* animal lovers
+
+## 6. Emotions in Imagery
+Describe observable conditions, not inferred emotions.
+
+Not allowed:
+* sad
+* happy
+* scared
+* hopeful
+
+Allowed:
+* injured animals
+* people protesting
+* a person crying (if visible)
+* slow-paced or ominous music
+
+## 7. Examples:
+
+"An advertisement for a toothpaste brand shows a man feeling embarrassed about stained teeth during a job interview. He switches to the advertised toothpaste, resulting in visibly whiter teeth and increased confidence. The ad emphasizes the product's whitening power and fresh breath benefits, using a lighthearted and motivational tone aimed at young professionals."
+
+"An advertisement for Cadbury Dairy Milk shows a young woman with fresh henna dye on her hands struggling to open a chocolate bar. Romantic music plays as she attempts to pick up and open the bar using her elbows and chin in a series of comedic moments. She eventually opens the chocolate while sitting on her bed and is shown smiling and making celebratory gestures before eating it. The ad is presented in a comedic and lighthearted tone."
+
+---
+
+IMPORTANT: Return ONLY the summary text itself with no preamble, explanation, or meta-commentary. Do not include phrases like "Here is the summary:" or "Summary:". Just provide the summary directly following the template structure above.

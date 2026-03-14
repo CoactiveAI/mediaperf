@@ -1,0 +1,73 @@
+# TwelveLabs Pegasus via Bedrock invoke_model API
+
+logging:
+  level: "INFO"
+
+tracking:
+  return_usage: true
+  progress_interval: 50
+
+pricing:
+  input_per_1m_tokens: 0.0
+  output_per_1m_tokens: 7.5
+
+video_source:
+  type: "s3"
+  mode: "from_s3"
+  s3:
+    bucket: "your-s3-bucket"
+    prefix: "youtube_ads_dataset_h264"
+    region: "us-east-1"
+
+video_selection:
+  mode: "all"
+  random_count: 10
+  random_seed: 42
+
+pipeline:
+  preprocessor:
+    type: null
+
+  tagger:
+    type: "bedrock_vision"
+    config:
+      model_id: "us.twelvelabs.pegasus-1-2-v1:0"
+      model_name: "pegasus-1-2"
+      region_name: "us-east-1"
+      api_type: "invoke"
+      account_id: "123456789012"
+      inference_params:
+        maxTokens: 1000
+        temperature: 0.3
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/video_level_tags_pegasus.jsonl"
+
+  metrics:
+    type: "multilabel_classification"
+    config:
+      pred_key: "video_level_tags"
+      gt_key: "tags"
+      exclude_tags: ['funny', 'effective', 'exciting']
+      exclude_failures: true
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+inference:
+  threshold: 0.5
+  ignore_threshold: true
+  test_tags: null
+
+paths:
+  inputs_dir: "data/inputs"
+  label_file: "YoutubeAdvertisementsLabels.json"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"
+
+labels:
+  gt_threshold: 0.5

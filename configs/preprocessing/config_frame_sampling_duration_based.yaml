@@ -1,0 +1,34 @@
+# Example config for preprocessing with duration-based video selection
+# This will select videos totaling 1000 minutes of content
+
+task_type: "preprocessing_only"
+
+video_source:
+  type: "s3"
+  mode: "local"  # Download videos for frame extraction
+  s3:
+    bucket: "benchmarks-project-dev"
+    prefix: "youtube_ads_dataset/"
+    region: "us-east-2"
+
+video_selection:
+  mode: "duration_based"
+  target_minutes: 1000  # Select videos totaling 1000 minutes
+  metadata_file: "data/inputs/youtube_ads_video_metadata.json"
+  order: "longest"  # Start with longest videos first
+  resolution: null  # Optional: filter by resolution (e.g., "1920x1080")
+
+pipeline:
+  preprocessor:
+    type: "frame_sampling"
+    config:
+      x_frames: 16
+      storage:
+        type: "s3"
+        config:
+          bucket: "benchmarks-project-dev"
+          prefix: "frames"
+          region_name: "us-east-2"
+
+paths:
+  cache_dir: "data/cache/videos"

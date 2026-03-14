@@ -1,0 +1,57 @@
+# Qwen Vision via OpenAI-compatible API (self-hosted or via Anyscale)
+
+task_type: "summarization"
+
+logging:
+  level: "INFO"
+
+tracking:
+  return_usage: true
+  progress_interval: 50
+
+pricing:
+  input_per_1m_tokens: 0.2
+  output_per_1m_tokens: 0.8
+
+video_source:
+  type: "s3"
+  mode: "local"
+  s3:
+    bucket: "your-s3-bucket"
+    prefix: "youtube_ads_dataset"
+    region: "us-east-1"
+
+video_selection:
+  mode: "all"
+
+pipeline:
+  preprocessor:
+    type: "video_base64"
+    config:
+      cache_dir: "data/cache/videos"
+
+  summarizer:
+    type: "qwen_summarizer"
+    config:
+      base_url: "https://your-qwen-endpoint.com/v1"
+      api_key_env: "QWEN_API_KEY"
+      model_id: "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8"
+      model_name: "qwen3-vl-30b"
+      max_tokens: 1024
+      temperature: 0.3
+      user_prompt_file: "universal_user.txt"
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/video_summaries_qwen.jsonl"
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+paths:
+  inputs_dir: "data/inputs"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"

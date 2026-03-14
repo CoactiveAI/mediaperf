@@ -1,0 +1,73 @@
+# Qwen Vision via OpenAI-compatible API (self-hosted or via Anyscale)
+
+logging:
+  level: "INFO"
+
+tracking:
+  return_usage: true
+  progress_interval: 50
+
+pricing:
+  input_per_1m_tokens: 0.2
+  output_per_1m_tokens: 0.8
+
+video_source:
+  type: "s3"
+  mode: "local"
+  s3:
+    bucket: "your-s3-bucket"
+    prefix: "youtube_ads_dataset_h264"
+    region: "us-east-1"
+
+video_selection:
+  mode: "all"
+  random_count: 5
+  random_seed: 42
+
+pipeline:
+  preprocessor:
+    type: "video_base64"
+    config:
+      cache_dir: "data/cache/videos"
+
+  tagger:
+    type: "qwen_vision"
+    config:
+      base_url: "https://your-qwen-endpoint.com/v1"
+      api_key_env: "QWEN_API_KEY"
+      model_id: "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8"
+      model_name: "qwen3-vl-30b"
+      max_tokens: 1024
+      temperature: 0.3
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/video_level_tags_qwen.jsonl"
+
+  metrics:
+    type: "multilabel_classification"
+    config:
+      pred_key: "video_level_tags"
+      gt_key: "tags"
+      exclude_tags: ['funny', 'effective', 'exciting']
+      exclude_failures: true
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+inference:
+  threshold: 0.5
+  ignore_threshold: true
+  test_tags: null
+
+paths:
+  inputs_dir: "data/inputs"
+  label_file: "YoutubeAdvertisementsLabels.json"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"
+
+labels:
+  gt_threshold: 0.5

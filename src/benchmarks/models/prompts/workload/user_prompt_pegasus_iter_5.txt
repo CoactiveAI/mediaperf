@@ -1,0 +1,88 @@
+Analyze this video advertisement and assign relevant tags with confidence scores.
+
+ALLOWED TAGS (select ONLY from these - expert-level definitions):
+- restaurant: Food service. Visuals: signage, service, drive-through, staff, kitchens.
+- chocolate: Chocolate/confectionery. Visuals: packaging, melting, bites, glossy textures.
+- chips: Snack foods. Visuals: packaging, bowls, casual eating, on-the-go.
+- seasoning: Cooking seasonings. Visuals: bottles, sauces poured, condiments.
+- petfood: Pet food. Visuals: bags/cans, pets eating, bonding.
+- alcohol: Alcoholic beverages. Visuals: bars, toasting, bottles opened/poured.
+- coffee: Coffee/tea. Visuals: brewing/pouring, steaming cups, cafés.
+- soda: Non-alcoholic beverages. Visuals: condensation, pouring, fizzing.
+- cars: Automotive. Visuals: driving, dealerships, mechanics, gas stations.
+- electronics: Consumer electronics. Visuals: devices used, screens, features.
+- phone_tv_internet_providers: Telecommunications. Visuals: towers, wifi, streaming, coverage maps.
+- financial: Financial products. Visuals: banks, credit cards, advisors, apps.
+- education: Educational institutions. Visuals: classrooms, graduations, studying.
+- security: Security products. Visuals: cameras, alarms, locks, monitoring.
+- software: Software applications. Visuals: interfaces, screens, dashboards.
+- other_service: Miscellaneous services. Visuals: service-specific scenarios.
+- beauty: Beauty/hygiene. Visuals: makeup, skincare, before/after.
+- healthcare: Healthcare services. Visuals: facilities, doctors/nurses, pill bottles.
+- clothing: Apparel/accessories. Visuals: fashion worn, stores, styling.
+- baby: Baby products. Visuals: babies/infants, nursery, feeding.
+- game: Games/toys. Visuals: playing, displays, gaming screens.
+- cleaning: Household cleaning. Visuals: cleaning, laundry, sparkling surfaces.
+- home_improvement: Home renovation. Visuals: interiors, furniture, DIY.
+- home_appliance: Appliances. Visuals: in use, kitchen, demos.
+- travel: Travel/tourism. Visuals: airports, cruises, theme parks, hotels.
+- media: Media/entertainment. Visuals: TV/movie scenes, streaming.
+- sports: Sports equipment/gear. Visuals: athletes, equipment, fitness.
+- shopping: Retail. Visuals: aisles, carts, checkouts, bags.
+- gambling: Gambling. Visuals: slots, lottery, casinos, cards/chips.
+- environment: Environmental conservation. Visuals: landscapes, wildlife, recycling.
+- animal_right: Animal rights. Visuals: animals helped, shelters, adoption.
+- human_right: Human rights. Visuals: diverse people, equality symbols.
+- safety: Public safety. Visuals: demonstrations, warnings, equipment.
+- smoking_alcohol_abuse: Anti-smoking/substance abuse. Visuals: warnings, consequences.
+- domestic_violence: Domestic violence awareness. Visuals: conflict, fear, support.
+- self_esteem: Self-confidence/anti-bullying. Visuals: bullying, transformation.
+- political: Political advertising. Visuals: candidates, logos, voting.
+- charities: Charitable organizations. Visuals: logos, donation calls, volunteers.
+- active: High-energy via rapid editing, movement (running/jumping), vibrant colors, dynamic camera.
+- afraid: Fear via dark imagery, threats, danger, suspense.
+- alarmed: Worry via problem scenarios, anxious expressions, tense body language.
+- alert: Attentiveness via discovery, focused attention, "aha moments."
+- amazed: Astonishment via dramatic reveals, transformations, jaw-dropping visuals.
+- amused: Humor via comedic scenarios, laughing people, witty jokes.
+- angry: Anger via conflict, angry characters, frustrated expressions.
+- calm: Serenity via peaceful landscapes, slow editing, soft lighting.
+- cheerful: Happiness via smiling, celebrations, bright colors, positive outcomes.
+- confident: Self-assurance via successful individuals, empowered postures, eye contact.
+- conscious: Awareness via thoughtful expressions, planning, informed decisions.
+- creative: Creativity via artistic activities, crafting, inventive problem-solving.
+- disturbed: Shocking via disturbing imagery, provocative visuals, taboo subjects.
+- eager: Desire via appetizing food (glistening, steam), refreshing beverages (condensation).
+- educated: Intelligence via experts (doctors/professors), infographics, professional settings.
+- emotional: Vulnerability via touching narratives, sentimental storytelling, nostalgia.
+- empathetic: Compassion via supportive relationships, helping gestures, solidarity.
+- fashionable: High fashion via runway styling, elegant aesthetics, beauty cinematography.
+- feminine: Feminine via soft pastels (pinks/lavenders), graceful movements, empowerment.
+- grateful: Appreciation via thank-you gestures, grateful expressions, gift-receiving.
+- inspired: Aspiration via inspirational journeys, empowerment, achievement stories.
+- jealous: Envy via social comparison, status displays, luxury, peer competition.
+- loving: Love via romantic couples, family bonding, affectionate touching.
+- manly: Masculine via rugged outdoors, masculine activities (sports/automotive), dark colors.
+- persuaded: Conviction via before/after transformations, testimonials, scientific demos.
+- pessimistic: Skepticism via questioning expressions, cynical perspectives, disbelief.
+- proud: Pride via achievement celebrations, patriotic symbols (flags/eagles), heritage.
+- sad: Melancholy via tears/crying, dejected expressions, gloomy tones, loss.
+- thrifty: Value via price tags, discount displays, savings callouts, cost comparisons.
+- youthful: Youth via children/teenagers, playful energy, age-reversal, carefree.
+
+EXPERT-LEVEL FRAMEWORK:
+1. Temporal: Act 1 (0-30%) hook/problem, Act 2 (30-70%) demo/tension, Act 3 (70-100%) results/payoff. Track persistence vs. segment-specific.
+2. Visual language: Colors (warm=active/eager, cool=calm/confident, dark=sad/afraid, bright=cheerful), editing (30+ cuts/min=active, <15=calm), angles (low=confident/proud, high=vulnerable, close=emotional), lighting (soft=calm/loving, bright=cheerful, low key=afraid), composition (symmetry=formal, asymmetry=disturbed).
+3. Precision confidence: 0.95-1.0 (core/essential), 0.85-0.94 (primary/sustained), 0.70-0.84 (secondary), 0.55-0.69 (supporting), 0.40-0.54 (minor), 0.30-0.39 (marginal).
+4. Context: Demographics (age, socioeconomics), persuasion (emotional/rational/social proof), symbolic vs. literal (beach=travel/romantic), cultural codes (white=purity, gold=luxury, green=natural, red=urgent).
+5. Disambiguation: Product vs. emotion—distinguish product (0.95) from tone (0.70). Similar emotions—choose sustained. Multiple products—use specific. Intensity—amused (light) vs. cheerful (deeper) vs. inspired (transformative).
+6. Edge cases: Text-only (0.45-0.55), competitor products (tag advertiser only), multiple emotions (tag dominant sustained), unclear product (broader category, lower confidence).
+7. Quality: Consistency (cheerful vs. sad shouldn't both be high), distribution (2-5 high, 3-7 medium), specificity, visual evidence, exact spelling.
+
+REQUIRED JSON FORMAT:
+{{
+  "tags": [
+    {{"tag": "tag_from_allowed_list", "confidence": 0.95}},
+    {{"tag": "another_allowed_tag", "confidence": 0.75}}
+  ]
+}}

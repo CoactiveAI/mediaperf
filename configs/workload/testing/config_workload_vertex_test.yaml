@@ -1,0 +1,105 @@
+# Supports: gemini-2.5-pro, gemini-2.5-flash, gemini-3.0-pro, gemini-3.1-flash-lite (update model_id, model_name, labels)
+
+task_type: "cost_benchmark"
+
+logging:
+  level: "DEBUG"
+
+tracking:
+  return_usage: true
+  progress_interval: 1
+
+pricing:
+  input_per_1m_tokens: 1.25
+  output_per_1m_tokens: 10.00
+
+cost_benchmark:
+  iterations:
+    - iteration: 1
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_1.txt"
+      skip_tag_injection: true
+      labels:
+        project: "your_project_name"
+        iteration: "1"
+
+    - iteration: 2
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_2.txt"
+      skip_tag_injection: true
+      labels:
+        project: "your_project_name"
+        iteration: "2"
+
+    - iteration: 3
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_3.txt"
+      skip_tag_injection: true
+      labels:
+        project: "your_project_name"
+        iteration: "3"
+
+    - iteration: 4
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_4.txt"
+      skip_tag_injection: true
+      labels:
+        project: "your_project_name"
+        iteration: "4"
+
+    - iteration: 5
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_5.txt"
+      skip_tag_injection: true
+      labels:
+        project: "your_project_name"
+        iteration: "5"
+
+video_source:
+  type: "gcs"
+  mode: "from_gcs"
+  gcs:
+    bucket: "your-gcs-bucket"
+    prefix: "YoutubeAdvertisements"
+
+video_selection:
+  mode: "duration_based"
+  target_minutes: 1
+  metadata_file: "data/inputs/youtube_ads_video_metadata.json"
+  order: "shortest"
+  resolution: null
+
+pipeline:
+  preprocessor:
+    type: null
+
+  tagger:
+    type: "vertex_vision"
+    config:
+      model_id: "gemini-2.5-pro"
+      model_name: "gemini-2_5-pro"
+      project_id: null
+      location: "us-central1"
+      inference_params:
+        max_output_tokens: 16384
+        temperature: 0.3
+        top_p: 0.1
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/workload_benchmark_results.jsonl"
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+inference:
+  threshold: 0.5
+  ignore_threshold: true
+  test_tags: null
+
+paths:
+  inputs_dir: "data/inputs"
+  label_file: "YoutubeAdvertisementsLabels.json"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"
+
+labels:
+  gt_threshold: 0.5

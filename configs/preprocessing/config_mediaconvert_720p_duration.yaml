@@ -1,0 +1,39 @@
+# MediaConvert config: Convert videos to H.264 + 720p using duration-based selection
+# Purpose: Prepare specific duration of videos for NVIDIA model
+# Usage: python scripts/convert_videos_mediaconvert.py --config configs/mediaconvert/config_mediaconvert_720p_duration.yaml
+
+task_type: "mediaconvert"
+
+video_source:
+  type: "s3"
+  mode: "from_s3"
+  s3:
+    bucket: "benchmarks-project-dev"
+    prefix: "youtube_ads_dataset/"
+    region: "us-east-2"
+
+video_selection:
+  mode: "duration_based"
+  target_minutes: 1000  # Convert 90 minutes of videos
+  metadata_file: "data/inputs/youtube_ads_video_metadata.json"
+  order: "longest"  # Start with longest videos first (or "shortest")
+  resolution: null  # Optional: filter by resolution (e.g., "1920x1080")
+
+mediaconvert:
+  output_prefix: "youtube_ads_dataset_720p_h264_workload/"
+  role_arn: "arn:aws:iam::443102425374:role/MediaConvertRole"
+  quality: "SINGLE_PASS"
+  max_bitrate: 5000000
+  max_height: 720  # Downscale to 720p max
+  rate_limit: 10
+  poll_interval: 30
+  progress_interval: 50
+  check_codec: false
+  avg_duration: 90.0
+
+  # Cost allocation tags
+  tags:
+    project: "benchmarks_project_mediaconvert"
+
+paths:
+  outputs_dir: "data/outputs"

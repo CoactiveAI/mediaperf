@@ -1,0 +1,69 @@
+# NVIDIA Nemotron Nano 12B v2 VL via Bedrock (requires 720p H.264 videos and frame extraction)
+
+task_type: "summarization"
+
+logging:
+  level: "INFO"
+
+tracking:
+  return_usage: true
+  progress_interval: 50
+
+pricing:
+  input_per_1m_tokens: 0.2
+  output_per_1m_tokens: 0.6
+
+video_source:
+  type: "s3"
+  mode: "local"
+  s3:
+    bucket: "your-s3-bucket"
+    prefix: "youtube_ads_dataset_720p_h264"
+    region: "us-east-1"
+
+video_selection:
+  mode: "all"
+
+pipeline:
+  preprocessor:
+    type: "frame_sampling"
+    config:
+      x_frames: 16
+      output_format: "bytes"
+      storage:
+        type: "s3"
+        config:
+          bucket: "your-s3-bucket"
+          prefix: "frames"
+          region_name: "us-east-1"
+
+  summarizer:
+    type: "bedrock_summarizer"
+    config:
+      model_id: "nvidia.nemotron-nano-12b-v2"
+      model_name: "nvidia-nemotron-nano-12b-v2"
+      region_name: "us-east-1"
+      api_type: "converse"
+      input_type: "frames_bytes"
+      inference_params:
+        maxTokens: 300
+        temperature: 0.3
+        topP: 0.1
+        additional_model_fields:
+          top_k: 20
+      user_prompt_file: "universal_user.txt"
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/video_summaries_nvidia.jsonl"
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+paths:
+  inputs_dir: "data/inputs"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos_nvidia_720p"
