@@ -313,6 +313,18 @@ uv run ruff format
 
 Pre-commit hooks automatically run Ruff on staged files before each commit.
 
+## Known Limitations
+
+MediaPerf delivers a production-ready benchmark for real media tasks today. The following are areas where future iterations can extend its coverage and value further. Contributions are welcome — whether that's code to this repo, licensed data for benchmarking, or joining our working group.
+
+- **No model size segmentation.** Results compare models of different sizes on the same leaderboard without size-class groupings. Future iterations will introduce further models and parameter-based tiers for fairer comparison.
+- **Generative VLMs only.** The benchmark currently evaluates vision-language models (e.g., Gemini, GPT, Qwen) on generative tasks (tagging, summarization). Encoder-based models used for embedding and search/retrieval workflows are not yet covered but are planned for future iterations.
+- **Short-form video only.** The dataset includes short-form video only. Longer-form content (episodes, films, sports, news) is on the roadmap but not yet included. Additional licensed data is needed to expand coverage.
+- **Pipeline steps not decoupled.** The pipeline does not explicitly isolate certain steps in pre-processing (e.g., frame sampling, resolution scaling), making it harder to attribute performance differences. Future iterations could introduce measurement at pipeline stages to enable comparative analysis of key optimizations.
+- **Limited output standardization.** The benchmark does not enforce standardized output formats (e.g., timecodes, structured metadata) required for downstream media workflows.
+- **Hardware- and platform-dependent results.** Cost and latency numbers are tied to specific cloud providers and instance types (e.g., GCP vs. AWS). Current results represent our best attempt to provide practical comparative measurements despite differences across environments.
+- **Pipelines reflect typical engineering effort.** Inference pipelines were built using publicly available documentation and best practices such that they are representative of what a typical engineering team could stand up in a reasonable timeframe (not provider-specific optimizations inaccessible to most teams). Future iterations may include a provider-optimized task track, contingent on involvement from model providers and platforms.
+
 ## Additional Documentation
 
 Additional information can be found in the `docs/` directory:
