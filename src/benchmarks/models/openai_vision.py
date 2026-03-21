@@ -1,4 +1,3 @@
-import json
 import time
 from typing import Dict, List
 
@@ -75,7 +74,8 @@ class OpenAIVideoTagger(VideoTagger):
             )
             api_time = time.time() - api_start
 
-            result = json.loads(resp.output_text)
+            # Parse and filter response to only allowed tags
+            result = self._parse_response(resp.output_text, allowed_tags, strip_markdown=False)
 
             # Add usage and timing if requested
             if return_usage:
@@ -129,7 +129,8 @@ class OpenAIVideoTagger(VideoTagger):
             text_format=TagsOutput,
         )
 
-        return json.loads(resp.output_text)
+        # Parse and filter response to only allowed tags
+        return self._parse_response(resp.output_text, allowed_tags, strip_markdown=False)
 
     def get_model_name(self) -> str:
         return self.model_name
