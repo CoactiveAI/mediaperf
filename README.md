@@ -50,7 +50,7 @@ We augment this dataset with additional summaries for the same video data from h
 
 ### Notes/caveats
 
-- The original tag list contains the `funny`, `effective` and `exciting` tags, but we exclude these from our calculations due to them having no concrete/too broad definitions.
+- A number of tags from the original list were omitted from analysis due to limited coverage or an incosistent application (e.g. `funny`, `effective`, `exciting`).
 - The dataset YouTube video IDs are available at `data/inputs/youtube_video_ids.txt`.
 - Videos should be named `vid_<youtube_id>.mp4` (e.g., `vid_8iXdsvgpwc8.mp4`) when stored in S3, GCS, or locally.
 - Video-level summaries are available at `data/inputs/summarization_ground_truth.jsonl`.
