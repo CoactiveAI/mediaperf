@@ -1,4 +1,6 @@
-# MediaPerf
+<p align="center">
+    <img src="docs/assets/logo.png" alt="MediaPerf Logo" width="400"/>
+  </p>
 
 A production-ready framework to evaluate the video understanding performance of multimodal foundation models, based  on the real data and tasks that technical leaders and practitioners within the media industry are building and deploying in production.
 
@@ -20,47 +22,9 @@ A production-ready framework to evaluate the video understanding performance of 
 
 ## Tasks
 
-### Standard tagging
-
-**Task:** For each video, the model receives:
-
-- The **video**
-- A **prompt** with instructions
-- A **fixed tag list** with definitions
-
-The model outputs the set of tags predicted to apply to the video (i.e. video-level multilabel classification).
-
-### Tagging and refinement workload
-
-**Task:** Similar to the video-level tagging task, for each round of tagging, the model receives:
-
-- The **videos**
-- A **prompt** with instructions
-- A **fixed tag list** with definitions
-
-This task focuses on the a tag refinement workload where there are five rounds of video-level tagging with increasingly refined prompts and tag definitions per round.
-
-As a workload task, this version focuses solely on cost and latency/throughput.
-
-### Summarization
-
-#### Inference
-**Task:** For each video, the model receives:
-
-- The **video**
-- A **prompt** with instructions
-
-The model outputs a summary of the video following the prompt instructions.
-
-#### Evaluation
-
-**Task:** For each video, the model (judge) receives:
-
-- The human-generated (ground truth) summary
-- The LLM-generated summary
-- A **prompt** with instructions (rubric to compare and score both summaries)
-
-The model outputs a score per rubric criterion.
+- Video-level tagging
+- Video-level summarization
+- Video-level tagging and refinement workload
 
 ## Measurements
 
@@ -69,26 +33,27 @@ The model outputs a score per rubric criterion.
     - Video-level summarization: Rubric-based score (using LLM-as-judge evaluation)
     - Video-level tagging and refinement workload: N/A
 - Cost
-- Latency and throughput
+- Latency/throughput
 
 ## Data
 
-### YouTube Advertisements Dataset
-
-The video data and original annotations are from:
-
-> Zaeem Hussain, Mingda Zhang, Xiaozhong Zhang, Keren Ye, Christopher Thomas, Zuha Agha, Nathan Ong, Adriana Kovashka. "Automatic Understanding of Image and Video Advertisements." *Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)*, 2017, pp. 1705-1715. [[Paper]](https://openaccess.thecvf.com/content_cvpr_2017/papers/Hussain_Automatic_Understanding_of_CVPR_2017_paper.pdf)
+As our core dataset, we use the "Automatic Understanding of Image and Video Advertisements"[[1]](#references) video data and annotations. As a brief description:
 
 - **Video data:** 2,003 ads videos ranging in length from 30s to 2m 30s for a total duration of 1,749 minutes.
-  - YouTube video IDs available in `data/inputs/youtube_video_ids.txt`
-  - Videos should be named as `vid_<youtube_id>.mp4` (e.g., `vid_8iXdsvgpwc8.mp4`) when stored in S3, GCS, or locally
 - **Annotations:** 68 video-level tags focused on topics and sentiment.
-   **Note:** The original tag list contains the `funny`, `effective` and `exciting` tags, but we ignore these in our calculations (as can be seen in the config files) due to them having no concrete/too broad definitions.
 
-### Our Augmented Annotations
+We augment this dataset with additional summaries for the same video data from human annotators. Briefly:
+- Video data: Same as above
+- Augmented annotations:
+   - Video-level summaries focused on long-form editorial descriptions, including storyline, intent, message, tone and target audience.
+   - 100 video-level tags, including genre, format, subject, mood and themes (note: planned in next MediaPerf release in Q2 2026).
 
-- 100 video-level tags, belonging to one of genre, format, subject, mood and theme categories. (Coming soon!)
-- Video-level summaries (`data/inputs/summarization_ground_truth.jsonl`) focused on storyline, intent, message, tone and target audience.
+### Notes/caveats
+
+- The original tag list contains the `funny`, `effective` and `exciting` tags, but we exclude these from our calculations due to them having no concrete/too broad definitions.
+- The dataset YouTube video IDs are available at `data/inputs/youtube_video_ids.txt`.
+- Videos should be named `vid_<youtube_id>.mp4` (e.g., `vid_8iXdsvgpwc8.mp4`) when stored in S3, GCS, or locally.
+- Video-level summaries are available at `data/inputs/summarization_ground_truth.jsonl`.
 
 ## Technologies Used
 
@@ -313,6 +278,16 @@ uv run ruff format
 
 Pre-commit hooks automatically run Ruff on staged files before each commit.
 
+## Additional Documentation
+
+Additional information can be found in the `docs/` directory:
+
+- **[Model Reference Guide](docs/MODEL_REFERENCE.md)** - Model-specific requirements, limitations, and best practices
+
+- **[Configuration Guide](docs/CONFIGURATION_GUIDE.md)** - Complete walkthrough of config file structure and options
+
+- **[Cost Calculation Guide](docs/COST_CALCULATION_GUIDE.md)** - Tracking and calculating costs for AWS, GCP, and model inference
+
 ## Known Limitations
 
 MediaPerf delivers a production-ready benchmark for real media tasks today. The following are areas where future iterations can extend its coverage and value further. Contributions are welcome — whether that's code to this repo, licensed data for benchmarking, or joining our working group.
@@ -325,18 +300,12 @@ MediaPerf delivers a production-ready benchmark for real media tasks today. The 
 - **Hardware- and platform-dependent results.** Cost and latency numbers are tied to specific cloud providers and instance types (e.g., GCP vs. AWS). Current results represent our best attempt to provide practical comparative measurements despite differences across environments.
 - **Pipelines reflect typical engineering effort.** Inference pipelines were built using publicly available documentation and best practices such that they are representative of what a typical engineering team could stand up in a reasonable timeframe (not provider-specific optimizations inaccessible to most teams). Future iterations may include a provider-optimized task track, contingent on involvement from model providers and platforms.
 
-## Additional Documentation
-
-Additional information can be found in the `docs/` directory:
-
-- **[Model Reference Guide](docs/MODEL_REFERENCE.md)** - Model-specific requirements, limitations, and best practices
-
-- **[Configuration Guide](docs/CONFIGURATION_GUIDE.md)** - Complete walkthrough of config file structure and options
-
-- **[Cost Calculation Guide](docs/COST_CALCULATION_GUIDE.md)** - Tracking and calculating costs for AWS, GCP, and model inference
-
 ## License
 
 The source code in this repository is licensed under the **Apache License 2.0**. See [LICENSE](LICENSE) for details.
 
 Our human-annotated summaries and tags are licensed under the **Creative Commons Attribution 4.0 International License (CC-BY 4.0)**. See [LICENSE-DATA](LICENSE-DATA) for details.
+
+## References
+
+[1] Zaeem Hussain, Mingda Zhang, Xiaozhong Zhang, Keren Ye, Christopher Thomas, Zuha Agha, Nathan Ong, Adriana Kovashka. "Automatic Understanding of Image and Video Advertisements." *Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)*, 2017, pp. 1705-1715. [Link](https://openaccess.thecvf.com/content_cvpr_2017/papers/Hussain_Automatic_Understanding_of_CVPR_2017_paper.pdf)
