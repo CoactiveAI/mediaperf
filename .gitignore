@@ -231,6 +231,7 @@ docs/*
 !docs/MODEL_REFERENCE.md
 !docs/CONFIGURATION_GUIDE.md
 !docs/COST_CALCULATION_GUIDE.md
+!docs/assets/
 data/Coactive/
 
 scripts/*
