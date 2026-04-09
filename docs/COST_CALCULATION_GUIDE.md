@@ -251,7 +251,7 @@ For video preprocessing on GCP: Add tags/labels to your GCS buckets, analogous t
 
 AWS Cost Explorer/GCP Cloud Billing (or Billing Export) are the most reliable sources to get inference, ingestion and preprocessing-related costs. If cloud resources are not fully set up, aren't an option, etc., the closest proxy for these costs would be input and output token cost calculation. This section explains how this is calculated.
 
-**Note:** Token costs are reported as inference costs for models outside of Bedrock/Vertex (e.g. GPT).
+**Note:** Token costs are reported as inference costs for models outside of Bedrock/Vertex (e.g. GPT, Claude).
 
 **Shared logic across all models**
 
