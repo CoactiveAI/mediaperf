@@ -1,0 +1,70 @@
+# Supports: claude-opus-4-6, claude-sonnet-4-5, claude-haiku-4-5 (update model_id and model_name)
+
+logging:
+  level: "INFO"
+
+tracking:
+  return_usage: true
+  progress_interval: 50
+
+pricing:
+  input_per_1m_tokens: 1.00
+  output_per_1m_tokens: 5.00
+
+video_source:
+  type: "s3"
+  mode: "local"
+  s3:
+    bucket: "your-s3-bucket"
+    prefix: "youtube_ads_dataset"
+    region: "us-east-1"
+
+video_selection:
+  mode: "all"
+  random_count: 5
+  random_seed: 42
+
+pipeline:
+  preprocessor:
+    type: "frame_sampling"
+    config:
+      x_frames: 32
+
+  tagger:
+    type: "anthropic_vision"
+    config:
+      model_id: "claude-haiku-4-5"
+      model_name: "claude-haiku-4.5"
+      api_key_env: "ANTHROPIC_API_KEY"
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/video_level_tags.jsonl"
+
+  metrics:
+    type: "multilabel_classification"
+    config:
+      pred_key: "video_level_tags"
+      gt_key: "tags"
+      exclude_tags: ['funny', 'effective', 'exciting']
+      exclude_failures: true
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+inference:
+  threshold: 0.5
+  ignore_threshold: true
+  test_tags: null
+
+paths:
+  inputs_dir: "data/inputs"
+  label_file: "YoutubeAdvertisementsLabels.json"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"
+
+labels:
+  gt_threshold: 0.5
