@@ -16,6 +16,7 @@ DEFAULT_BEDROCK_MODEL_ID = "us.amazon.nova-lite-v1:0"
 DEFAULT_AWS_REGION = "us-east-1"
 DEFAULT_VERTEX_MODEL_ID = "gemini-2.5-flash"
 DEFAULT_VERTEX_LOCATION = "us-central1"
+DEFAULT_ANTHROPIC_MODEL = "claude-haiku-4-5"
 
 # Bedrock inference parameters
 BEDROCK_MAX_TOKENS = 1000

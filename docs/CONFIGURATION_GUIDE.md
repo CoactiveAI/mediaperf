@@ -266,7 +266,7 @@ pipeline:
       model_id: <model_id_or_arn>  # Model ID or inference profile ARN (Bedrock only)
 ```
 
-**Registry Keys**: `bedrock_vision`, `openai_vision`, `vertex_vision`, `qwen_vision`
+**Registry Keys**: `anthropic_vision`, `bedrock_vision`, `openai_vision`, `vertex_vision`, `qwen_vision`
 
 **Note**: For Bedrock models, `model_id` can be either a model ID (e.g., `"us.amazon.nova-lite-v2:0"`) or an inference profile ARN for cost tracking purposes. See [Cost Calculation Guide](COST_CALCULATION_GUIDE.md) for details on creating tagged inference profiles.
 
@@ -283,7 +283,7 @@ pipeline:
     config: {}            # Model-specific parameters
 ```
 
-**Registry Keys**: `bedrock_summarizer`, `openai_summarizer`, `vertex_summarizer`, `qwen_summarizer`
+**Registry Keys**: `anthropic_summarizer`, `bedrock_summarizer`, `openai_summarizer`, `vertex_summarizer`, `qwen_summarizer`
 
 **All parameters are model-specific**. See [Model Reference Guide](MODEL_REFERENCE.md) for complete config examples.
 
@@ -341,8 +341,11 @@ pipeline:
 For complete working examples, see the test configs in each task directory:
 
 - **Standard Tagging (GPT)**: `configs/standard_tagging/testing/config_gpt_test.yaml`
+- **Standard Tagging (Anthropic)**: `configs/standard_tagging/testing/config_anthropic_test.yaml`
 - **Workload Benchmark (Pegasus)**: `configs/workload/testing/config_workload_bedrock_pegasus_1_2_test.yaml`
+- **Workload Benchmark (Anthropic)**: `configs/workload/testing/config_workload_anthropic_test.yaml`
 - **Summarization (NVIDIA)**: `configs/summarization/testing/config_bedrock_nvidia_test.yaml`
+- **Summarization (Anthropic)**: `configs/summarization/testing/config_anthropic_test.yaml`
 - **Summary Evaluation (Gemini)**: `configs/summary_evaluation/testing/config_openai_judge_gemini_2_5_pro_test.yaml`
 
 These test configs demonstrate all configuration sections with working values for quick testing on small video sets.
@@ -357,7 +360,7 @@ Change `type` (registry key) and update `config` with model-specific parameters:
 
 ```yaml
 tagger:
-  type: "bedrock_vision"  # or "openai_vision", "vertex_vision", "qwen_vision"
+  type: "bedrock_vision"  # or "anthropic_vision", "openai_vision", "vertex_vision", "qwen_vision"
   config: {}              # See Model Reference Guide
 ```
 

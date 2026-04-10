@@ -12,6 +12,8 @@ from .metrics.cost_metrics import CostMetricCalculator
 from .metrics.llm_judge_metrics import LLMJudgeMetricCalculator
 from .metrics.multilabel_classification import MultilabelClassificationMetric
 from .metrics.timing_metrics import TimingMetricCalculator
+from .models.anthropic_summarizer import AnthropicSummarizer
+from .models.anthropic_vision import AnthropicVideoTagger
 from .models.base import VideoTagger
 from .models.base_judge import LLMJudge
 from .models.base_summarizer import VideoSummarizer
@@ -44,6 +46,7 @@ PREPROCESSOR_REGISTRY: Dict[str, Type[VideoPreprocessor]] = {
 }
 
 TAGGER_REGISTRY: Dict[str, Type[VideoTagger]] = {
+    "anthropic_vision": AnthropicVideoTagger,
     "openai_vision": OpenAIVideoTagger,
     "bedrock_vision": BedrockVideoTagger,
     "vertex_vision": VertexVideoTagger,
@@ -51,6 +54,7 @@ TAGGER_REGISTRY: Dict[str, Type[VideoTagger]] = {
 }
 
 SUMMARIZER_REGISTRY: Dict[str, Type[VideoSummarizer]] = {
+    "anthropic_summarizer": AnthropicSummarizer,
     "bedrock_summarizer": BedrockVideoSummarizer,
     "openai_summarizer": OpenAISummarizer,
     "vertex_summarizer": VertexSummarizer,

@@ -1,6 +1,6 @@
 # Model Reference Guide
 
-Complete reference for the 13 vision-language models benchmarked in this framework, including requirements, limitations, optimal configurations, and known issues.
+Complete reference for the 16 vision-language models benchmarked in this framework, including requirements, limitations, optimal configurations, and known issues.
 
 ---
 
@@ -515,6 +515,118 @@ video_source:
 
 ---
 
+## Anthropic Claude Models
+
+**Registry Key**: `anthropic_vision`, `anthropic_summarizer`
+
+### Claude Opus 4.6
+
+**Model ID**: `claude-opus-4-6`
+
+**Input Requirements**:
+- **Input type**: Base64-encoded JPEG frames
+
+**Configuration Example**:
+```yaml
+<task>:
+  type: <task type>
+  config:
+    model_id: "claude-opus-4-6"
+    model_name: "claude-opus-4.6"
+    api_key_env: "ANTHROPIC_API_KEY"
+```
+
+**Preprocessing**:
+
+Frame sampling.
+
+```yaml
+preprocessor:
+  type: "frame_sampling"
+  config:
+    x_frames: 32
+    output_format: "base64"
+    storage:
+      type: "s3"
+      config:
+        bucket: "your-s3-bucket"
+        prefix: "frames"
+        region_name: "us-east-2"
+```
+
+**Video Source Setup**:
+```yaml
+video_source:
+  type: "s3"
+  mode: "local"  # Download and preprocess to frames
+```
+
+**Features**:
+- **Structured Output**: Enforces JSON schema via `messages.parse()` API for tagging tasks
+- **High Quality**: Highest tier model for complex reasoning
+
+**Cost** (per 1M tokens):
+- Input: $5.00
+- Output: $25.00
+
+---
+
+### Claude Sonnet 4.6
+
+**Model ID**: `claude-sonnet-4-6`
+
+**Input Requirements**: Same as Claude Opus 4.6
+
+**Configuration Example**:
+```yaml
+<task>:
+  type: <task type>
+  config:
+    model_id: "claude-sonnet-4-6"
+    model_name: "claude-sonnet-4.6"
+    api_key_env: "ANTHROPIC_API_KEY"
+```
+
+**Preprocessing**: Same as Claude Opus 4.6 (frame sampling with base64 encoding)
+
+**Video Source Setup**: Same as Claude Opus 4.6
+
+**Features**: Same as Claude Opus 4.6
+
+**Cost** (per 1M tokens):
+- Input: $3.00
+- Output: $15.00
+
+---
+
+### Claude Haiku 4.5
+
+**Model ID**: `claude-haiku-4-5` (default in `DEFAULT_ANTHROPIC_MODEL`)
+
+**Input Requirements**: Same as Claude Opus 4.6
+
+**Configuration Example**:
+```yaml
+<task>:
+  type: <task type>
+  config:
+    model_id: "claude-haiku-4-5"
+    model_name: "claude-haiku-4.5"
+    api_key_env: "ANTHROPIC_API_KEY"
+```
+
+**Preprocessing**: Same as Claude Opus 4.6 (frame sampling with base64 encoding)
+
+**Video Source Setup**: Same as Claude Opus 4.6
+
+**Features**: Same as Claude Opus 4.6
+
+**Cost** (per 1M tokens):
+- Input: $1.00
+- Output: $5.00
+
+---
+
 ## Self-Hosted Models
 
 ### Qwen3-VL-30B-A3B-Instruct-FP8
@@ -581,6 +693,9 @@ video_source:
 | GPT 5.4 | Base64 (frames) | N/A | Frame sampling | $2.50 | $15.00 |
 | GPT 5 Mini | Base64 (frames) | N/A | Frame sampling | $0.25 | $2.00 |
 | GPT 5 Nano | Base64 (frames) | N/A | Frame sampling | $0.05 | $0.40 |
+| Claude Opus 4.6 | Base64 (frames) | N/A | Frame sampling | $5.00 | $25.00 |
+| Claude Sonnet 4.6 | Base64 (frames) | N/A | Frame sampling | $3.00 | $15.00 |
+| Claude Haiku 4.5 | Base64 (frames) | N/A | Frame sampling | $1.00 | $5.00 |
 | Qwen3-VL-30B | Base64 (video) | N/A | None | Varies | Varies |
 
 ---

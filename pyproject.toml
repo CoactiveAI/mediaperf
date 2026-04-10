@@ -1,5 +1,5 @@
 [project]
-name = "benchmarks"
+name = "mediaperf"
 version = "0.1.0"
 description = "Benchmarking framework for multimodal models"
 readme = "README.md"
@@ -16,6 +16,7 @@ dependencies = [
     "pydantic>=2.0.0",
     "loguru>=0.7.3",
     "google-genai>=1.50.1",
+    "anthropic>=0.92.0",
 ]
 
 [dependency-groups]
