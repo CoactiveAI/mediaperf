@@ -19,11 +19,18 @@ class AnthropicVideoTagger(VideoTagger):
         api_key: str,
         model_id: str = DEFAULT_ANTHROPIC_MODEL,
         model_name: str = None,
+        custom_system_prompt: str = None,
+        custom_user_prompt: str = None,
     ):
         self.client = Anthropic(api_key=api_key)
         self.model_id = model_id
         self.model_name = model_name
-        self._load_prompts(model_prefix="anthropic", prompts_dir=TAGGING_PROMPTS_DIR)
+        self._load_prompts(
+            model_prefix="anthropic",
+            prompts_dir=TAGGING_PROMPTS_DIR,
+            system_prompt_file=custom_system_prompt,
+            user_prompt_file=custom_user_prompt,
+        )
 
     def tag_video(
         self,

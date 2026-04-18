@@ -24,12 +24,19 @@ class OpenAIVideoTagger(VideoTagger):
         model_id: str = DEFAULT_OPENAI_MODEL,
         model_name: str = None,
         reasoning_effort: str = DEFAULT_OPENAI_REASONING_EFFORT,
+        custom_system_prompt: str = None,
+        custom_user_prompt: str = None,
     ):
         self.client = OpenAI(api_key=api_key)
         self.model_id = model_id
         self.model_name = model_name
         self.reasoning_effort = reasoning_effort
-        self._load_prompts(model_prefix="openai", prompts_dir=TAGGING_PROMPTS_DIR)
+        self._load_prompts(
+            model_prefix="openai",
+            prompts_dir=TAGGING_PROMPTS_DIR,
+            system_prompt_file=custom_system_prompt,
+            user_prompt_file=custom_user_prompt,
+        )
 
     def tag_video(
         self,

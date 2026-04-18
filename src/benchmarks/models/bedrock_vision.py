@@ -33,6 +33,8 @@ class BedrockVideoTagger(VideoTagger):
         api_type: str = "converse",
         account_id: Optional[str] = None,
         input_type: str = "s3_uri",
+        custom_system_prompt: Optional[str] = None,
+        custom_user_prompt: Optional[str] = None,
     ):
         self.model_id = model_id
         self.model_name = model_name
@@ -57,7 +59,12 @@ class BedrockVideoTagger(VideoTagger):
         else:
             self.client = boto3.client("bedrock-runtime", region_name=region_name)
 
-        self._load_prompts(model_prefix="bedrock", prompts_dir=TAGGING_PROMPTS_DIR)
+        self._load_prompts(
+            model_prefix="bedrock",
+            prompts_dir=TAGGING_PROMPTS_DIR,
+            system_prompt_file=custom_system_prompt,
+            user_prompt_file=custom_user_prompt,
+        )
 
     def tag_video(
         self,
