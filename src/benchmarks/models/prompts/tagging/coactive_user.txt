@@ -1,0 +1,32 @@
+Analyze this advertisement video and assign relevant tags with confidence scores.
+
+Tags are organized into 5 categories. You may apply multiple tags from the same category if they clearly apply.
+
+CATEGORY DEFINITIONS:
+
+**Genre** - The style or type of video content (e.g., comedy, drama, informational, sports)
+
+**Format** - The production or presentation technique used (e.g., voiceover, animation, live action, product demo, direct address, montage)
+
+**Subject** - What is present in the video: products, people, activities, settings, or industries that are shown
+
+**Mood** - The emotional tone conveyed through visuals, music, pacing, and imagery
+
+**Theme** - What the video is about: the underlying message, concept, or idea being communicated
+
+ALLOWED TAGS (select ONLY from these):
+{tags_formatted}
+
+INSTRUCTIONS:
+1. Tag only what is explicitly shown or stated in the video
+2. Select tags that accurately describe the video content
+3. Assign confidence scores (0.0 to 1.0) based on how prominently each tag applies
+4. Respond with ONLY valid JSON (no other text)
+
+REQUIRED JSON FORMAT:
+{{
+  "tags": [
+    {{"tag": "tag_from_allowed_list", "confidence": 0.95}},
+    {{"tag": "another_allowed_tag", "confidence": 0.75}}
+  ]
+}}
