@@ -46,7 +46,7 @@ We augment this dataset with additional summaries for the same video data from h
 - Video data: Same as above
 - Augmented annotations:
    - Video-level summaries focused on long-form editorial descriptions, including storyline, intent, message, tone and target audience.
-   - 100 video-level tags, including genre, format, subject, mood and themes (note: planned in next MediaPerf release in Q2 2026).
+   - 100 video-level tags, including genre, format, subject, mood and themes.
 
 ### Notes/caveats
 
@@ -62,7 +62,7 @@ We augment this dataset with additional summaries for the same video data from h
 - AWS Bedrock (Nova Pro v1.0, Nova Lite v2.0, Pegasus 1.2, NVIDIA Nemotron Nano 12B v2 VL)
 - OpenAI API (GPT 5.1, GPT 5.4, GPT 5 Mini, GPT 5 Nano)
 - Google Vertex AI (Gemini 2.5 Pro, Gemini 3.0 Pro, Gemini 3.1 Pro, Gemini 3.1 Flash-Lite)
-- Anthropic API (Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5)
+- Anthropic API (Claude Opus 4.7, Claude Sonnet 4.6, Claude Haiku 4.5)
 - Self-Hosted Qwen (Qwen3-VL-30B-A3B-Instruct-FP8)
 - Pydantic v2 for config validation
 - python-dotenv for environment loading

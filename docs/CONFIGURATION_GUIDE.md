@@ -201,7 +201,51 @@ labels:
 
 - `gt_threshold`: Minimum confidence score for ground truth labels (0-1)
 
-**Label Files** (in `inputs_dir`): `YoutubeAdvertisementsLabels.json`, `youtube_ads_tag_descriptions.json`
+**Canonical Format**: Tagging tasks use a canonical JSON format for annotations and tag descriptions:
+
+```yaml
+paths:
+  inputs_dir: "data/inputs"
+  label_file: "video_annotations_youtube_ads.json"  # or "video_annotations_coactive.json"
+  tag_descriptions_file: "tag_descriptions_youtube_ads.json"  # or "tag_descriptions_coactive.json"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"
+```
+
+- `label_file`: Video annotations in canonical format (`{"video_id": ["tag1", "tag2"], ...}`)
+- `tag_descriptions_file`: Tag descriptions in canonical format (`{"tag": "description", ...}`)
+
+**Custom Prompts**: Optionally specify custom prompt files for different tag systems:
+
+```yaml
+pipeline:
+  tagger:
+    type: "bedrock_vision"
+    config:
+      custom_system_prompt: null  # Optional: custom system prompt filename
+      custom_user_prompt: null    # Optional: custom user prompt filename
+```
+
+**Available Datasets**:
+- **YouTube Ads (68 tags)**: `video_annotations_youtube_ads.json`, `tag_descriptions_youtube_ads.json`
+  - Uses default model-specific prompts (e.g., `bedrock_user.txt`)
+- **Coactive 100-tag**: `video_annotations_coactive.json`, `tag_descriptions_coactive.json`
+  - **Important**: Set `custom_user_prompt: "coactive_user.txt"` when using this dataset
+  - The Coactive prompt includes definitions for the 5 tag categories (Genre, Format, Subject, Mood, Theme) which are essential for correct tagging
+
+**Example - Coactive 100-tag configuration**:
+```yaml
+paths:
+  label_file: "video_annotations_coactive.json"
+  tag_descriptions_file: "tag_descriptions_coactive.json"
+
+pipeline:
+  tagger:
+    type: "bedrock_vision"
+    config:
+      model_id: "us.amazon.nova-lite-v2:0"
+      custom_user_prompt: "coactive_user.txt"  # Required for 100-tag system
+```
 
 ---
 

@@ -519,9 +519,9 @@ video_source:
 
 **Registry Key**: `anthropic_vision`, `anthropic_summarizer`
 
-### Claude Opus 4.6
+### Claude Opus 4.7
 
-**Model ID**: `claude-opus-4-6`
+**Model ID**: `claude-opus-4-7`
 
 **Input Requirements**:
 - **Input type**: Base64-encoded JPEG frames
@@ -531,8 +531,8 @@ video_source:
 <task>:
   type: <task type>
   config:
-    model_id: "claude-opus-4-6"
-    model_name: "claude-opus-4.6"
+    model_id: "claude-opus-4-7"
+    model_name: "claude-opus-4.7"
     api_key_env: "ANTHROPIC_API_KEY"
 ```
 
@@ -575,7 +575,7 @@ video_source:
 
 **Model ID**: `claude-sonnet-4-6`
 
-**Input Requirements**: Same as Claude Opus 4.6
+**Input Requirements**: Same as Claude Opus 4.7
 
 **Configuration Example**:
 ```yaml
@@ -587,11 +587,11 @@ video_source:
     api_key_env: "ANTHROPIC_API_KEY"
 ```
 
-**Preprocessing**: Same as Claude Opus 4.6 (frame sampling with base64 encoding)
+**Preprocessing**: Same as Claude Opus 4.7 (frame sampling with base64 encoding)
 
-**Video Source Setup**: Same as Claude Opus 4.6
+**Video Source Setup**: Same as Claude Opus 4.7
 
-**Features**: Same as Claude Opus 4.6
+**Features**: Same as Claude Opus 4.7
 
 **Cost** (per 1M tokens):
 - Input: $3.00
@@ -603,7 +603,7 @@ video_source:
 
 **Model ID**: `claude-haiku-4-5` (default in `DEFAULT_ANTHROPIC_MODEL`)
 
-**Input Requirements**: Same as Claude Opus 4.6
+**Input Requirements**: Same as Claude Opus 4.7
 
 **Configuration Example**:
 ```yaml
@@ -615,11 +615,11 @@ video_source:
     api_key_env: "ANTHROPIC_API_KEY"
 ```
 
-**Preprocessing**: Same as Claude Opus 4.6 (frame sampling with base64 encoding)
+**Preprocessing**: Same as Claude Opus 4.7 (frame sampling with base64 encoding)
 
-**Video Source Setup**: Same as Claude Opus 4.6
+**Video Source Setup**: Same as Claude Opus 4.7
 
-**Features**: Same as Claude Opus 4.6
+**Features**: Same as Claude Opus 4.7
 
 **Cost** (per 1M tokens):
 - Input: $1.00
@@ -693,7 +693,7 @@ video_source:
 | GPT 5.4 | Base64 (frames) | N/A | Frame sampling | $2.50 | $15.00 |
 | GPT 5 Mini | Base64 (frames) | N/A | Frame sampling | $0.25 | $2.00 |
 | GPT 5 Nano | Base64 (frames) | N/A | Frame sampling | $0.05 | $0.40 |
-| Claude Opus 4.6 | Base64 (frames) | N/A | Frame sampling | $5.00 | $25.00 |
+| Claude Opus 4.7 | Base64 (frames) | N/A | Frame sampling | $5.00 | $25.00 |
 | Claude Sonnet 4.6 | Base64 (frames) | N/A | Frame sampling | $3.00 | $15.00 |
 | Claude Haiku 4.5 | Base64 (frames) | N/A | Frame sampling | $1.00 | $5.00 |
 | Qwen3-VL-30B | Base64 (video) | N/A | None | Varies | Varies |
