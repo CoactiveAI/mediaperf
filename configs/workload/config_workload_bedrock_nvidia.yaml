@@ -74,7 +74,7 @@ pipeline:
       api_type: "converse"
       input_type: "frames_bytes"
       inference_params:
-        maxTokens: 1000
+        maxTokens: 16384
         temperature: 0.3
         topP: 0.1
         additional_model_fields:
@@ -105,7 +105,8 @@ inference:
 
 paths:
   inputs_dir: "data/inputs"
-  label_file: "YoutubeAdvertisementsLabels.json"
+  label_file: "video_annotations_youtube_ads.json"
+  tag_descriptions_file: "tag_descriptions_youtube_ads.json"
   outputs_dir: "data/outputs"
   cache_dir: "data/cache/videos_nvidia_720p"
 

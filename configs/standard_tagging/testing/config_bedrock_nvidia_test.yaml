@@ -45,6 +45,8 @@ pipeline:
         topP: 0.1
         additional_model_fields:
           top_k: 20
+      custom_system_prompt: null
+      custom_user_prompt: "coactive_user.txt"
 
   result_writer:
     type: "jsonl"
@@ -71,7 +73,8 @@ inference:
 
 paths:
   inputs_dir: "data/inputs"
-  label_file: "YoutubeAdvertisementsLabels.json"
+  label_file: "video_annotations_coactive.json"
+  tag_descriptions_file: "tag_descriptions_coactive.json"
   outputs_dir: "data/outputs"
   cache_dir: "data/cache/videos_nvidia_720p"
 
