@@ -532,7 +532,7 @@ video_source:
   type: <task type>
   config:
     model_id: "claude-opus-4-6"
-    model_name: "claude-opus-4.6"
+    model_name: "claude-opus-4.7"
     api_key_env: "ANTHROPIC_API_KEY"
 ```
 

@@ -65,7 +65,7 @@ pipeline:
       api_key_env: "QWEN_API_KEY"
       model_id: "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8"
       model_name: "qwen3-vl-30b"
-      max_tokens: 1024
+      max_tokens: 16384
       temperature: 0.3
 
   result_writer:
@@ -93,7 +93,8 @@ inference:
 
 paths:
   inputs_dir: "data/inputs"
-  label_file: "YoutubeAdvertisementsLabels.json"
+  label_file: "video_annotations_youtube_ads.json"
+  tag_descriptions_file: "tag_descriptions_youtube_ads.json"
   outputs_dir: "data/outputs"
   cache_dir: "data/cache/videos"
 

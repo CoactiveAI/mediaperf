@@ -46,7 +46,7 @@ We augment this dataset with additional summaries for the same video data from h
 - Video data: Same as above
 - Augmented annotations:
    - Video-level summaries focused on long-form editorial descriptions, including storyline, intent, message, tone and target audience.
-   - 100 video-level tags, including genre, format, subject, mood and themes (note: planned in next MediaPerf release in Q2 2026).
+   - 100 video-level tags, including genre, format, subject, mood and themes.
 
 ### Notes/caveats
 

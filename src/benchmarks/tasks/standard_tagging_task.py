@@ -1,4 +1,3 @@
-import json
 import time
 from pathlib import Path
 
@@ -14,17 +13,11 @@ from ..builders import (
 from ..datasets.youtube_ads import (
     extract_video_id,
     inverted_to_jsonl,
-    read_advertisements_labels,
+    read_video_annotations,
 )
 from ..metrics.classification import print_metrics_summary
 from ..utils.video_selection import sample_videos
 from .video_tagging_pipeline import run_video_tagging_pipeline
-
-
-def load_label_descriptions(label_descriptions_path: str) -> dict:
-    """Load label descriptions from JSON file."""
-    with open(label_descriptions_path, "r") as f:
-        return json.load(f)
 
 
 def run_standard_tagging(config: dict):
@@ -33,17 +26,14 @@ def run_standard_tagging(config: dict):
     # Extract paths from config
     INPUTS_DIR = Path(config["paths"]["inputs_dir"])
     OUTPUTS_DIR = Path(config["paths"]["outputs_dir"])
-    LABEL_PATH = INPUTS_DIR / config["paths"]["label_file"]
+    ANNOTATIONS_PATH = INPUTS_DIR / config["paths"]["label_file"]
+    TAG_DESCRIPTIONS_PATH = INPUTS_DIR / config["paths"]["tag_descriptions_file"]
 
     # Create output directory if it doesn't exist
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
 
     # Extract inference config
     THRESHOLD = config["inference"]["threshold"]
-
-    # Load label descriptions
-    LABEL_DESCRIPTIONS_PATH = INPUTS_DIR / "youtube_ads_label_descriptions.json"
-    YOUTUBE_ADS_LABEL_DESCRIPTIONS = load_label_descriptions(str(LABEL_DESCRIPTIONS_PATH))
 
     # Get model name and timestamp for consistent file naming
     MODEL_NAME = config["pipeline"]["tagger"]["config"].get(
@@ -61,11 +51,10 @@ def run_standard_tagging(config: dict):
 
     # Step 2: Prepare labels
     logger.info("[2/5] Loading and preparing labels...")
-    label_to_videos, label_descriptions = read_advertisements_labels(
-        label_path=str(LABEL_PATH),
+    label_to_videos, label_descriptions = read_video_annotations(
+        annotations_path=str(ANNOTATIONS_PATH),
+        tag_descriptions_path=str(TAG_DESCRIPTIONS_PATH),
         video_list=video_list,
-        label_descriptions=YOUTUBE_ADS_LABEL_DESCRIPTIONS,
-        gt_threshold=config["labels"]["gt_threshold"],
     )
 
     # Create ground truth JSONL with model_name and timestamp

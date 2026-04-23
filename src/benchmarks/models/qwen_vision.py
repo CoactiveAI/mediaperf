@@ -21,13 +21,20 @@ class QwenVideoTagger(VideoTagger):
         model_name: str = None,
         max_tokens: int = 1024,
         temperature: float = 0.3,
+        custom_system_prompt: Optional[str] = None,
+        custom_user_prompt: Optional[str] = None,
     ):
         self.client = OpenAI(api_key=api_key, base_url=base_url)
         self.model_id = model_id
         self.model_name = model_name
         self.max_tokens = max_tokens
         self.temperature = temperature
-        self._load_prompts(model_prefix="qwen", prompts_dir=TAGGING_PROMPTS_DIR)
+        self._load_prompts(
+            model_prefix="qwen",
+            prompts_dir=TAGGING_PROMPTS_DIR,
+            system_prompt_file=custom_system_prompt,
+            user_prompt_file=custom_user_prompt,
+        )
 
     def tag_video(
         self,

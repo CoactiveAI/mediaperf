@@ -1,4 +1,4 @@
-# Supports: claude-opus-4-6, claude-sonnet-4-5, claude-haiku-4-5 (update model_id and model_name)
+# Supports: claude-opus-4-6, claude-sonnet-4-6, claude-haiku-4-5 (update model_id and model_name)
 
 task_type: "cost_benchmark"
 
@@ -62,6 +62,8 @@ pipeline:
       model_id: "claude-haiku-4-5"
       model_name: "claude-haiku-4.5"
       api_key_env: "ANTHROPIC_API_KEY"
+      inference_params:
+        max_tokens: 1024
 
   result_writer:
     type: "jsonl"
@@ -80,7 +82,8 @@ inference:
 
 paths:
   inputs_dir: "data/inputs"
-  label_file: "YoutubeAdvertisementsLabels.json"
+  label_file: "video_annotations_youtube_ads.json"
+  tag_descriptions_file: "tag_descriptions_youtube_ads.json"
   outputs_dir: "data/outputs"
   cache_dir: "data/cache/videos"
 

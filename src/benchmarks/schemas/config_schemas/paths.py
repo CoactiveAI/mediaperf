@@ -15,11 +15,12 @@ class PathsConfig(BaseModel):
 class TaggingPathsConfig(PathsConfig):
     """Paths configuration for tagging tasks."""
 
-    label_file: str = Field(..., description="Ground truth labels file")
-    tag_descriptions: Optional[str] = Field(None, description="Tag descriptions file")
+    label_file: str = Field(..., description="Video annotations file (video_annotations.json)")
+    tag_descriptions_file: str = Field(..., description="Tag descriptions file (tag_descriptions.json)")
 
     @model_validator(mode="after")
     def validate_files_exist(self) -> "TaggingPathsConfig":
+        # Validate label file
         if not Path(self.label_file).is_absolute():
             label_path = Path(self.inputs_dir) / self.label_file
         else:
@@ -28,14 +29,14 @@ class TaggingPathsConfig(PathsConfig):
         if not label_path.exists():
             raise ValueError(f"Label file does not exist: {label_path}")
 
-        if self.tag_descriptions:
-            if not Path(self.tag_descriptions).is_absolute():
-                tag_desc_path = Path(self.inputs_dir) / self.tag_descriptions
-            else:
-                tag_desc_path = Path(self.tag_descriptions)
+        # Validate tag descriptions file
+        if not Path(self.tag_descriptions_file).is_absolute():
+            tag_desc_path = Path(self.inputs_dir) / self.tag_descriptions_file
+        else:
+            tag_desc_path = Path(self.tag_descriptions_file)
 
-            if not tag_desc_path.exists():
-                raise ValueError(f"Tag descriptions file does not exist: {tag_desc_path}")
+        if not tag_desc_path.exists():
+            raise ValueError(f"Tag descriptions file does not exist: {tag_desc_path}")
 
         return self
 

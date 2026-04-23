@@ -99,6 +99,8 @@ class VideoTagger(ABC):
 
         tags_formatted = "\n".join(tag_list)
 
+        logger.debug(f"Injecting {len(allowed_tags)} tags into prompt")
+
         # Use custom prompt if provided, otherwise use template
         prompt_template = custom_user_prompt if custom_user_prompt else self.user_prompt_template
 
@@ -108,6 +110,8 @@ class VideoTagger(ABC):
         else:
             # Fallback: append tags manually for templates without placeholder
             final_prompt = f"{prompt_template}\n\nAvailable tags:\n{tags_formatted}"
+
+        logger.debug(f"Final user prompt:\n{final_prompt}")
 
         return final_prompt
 
@@ -144,22 +148,28 @@ class VideoTagger(ABC):
             # Parse and validate JSON
             output = TagsOutput.model_validate_json(cleaned_text)
 
-            # Filter tags to allowed list (case-insensitive, normalize spaces to underscores)
-            # Normalize allowed_tags for comparison
-            allowed_tags_normalized = [tag.lower() for tag in allowed_tags]
+            # Filter tags to allowed list (case-insensitive, normalize spaces/underscores)
+            # Build mapping: normalized_tag -> original_tag for lookup
+            # Normalize by: lowercase + replace spaces/underscores with single format
+            def normalize_tag(tag: str) -> str:
+                return tag.lower().replace(" ", "_").replace("&", "_")
+
+            allowed_tags_map = {normalize_tag(tag): tag for tag in allowed_tags}
 
             validated_tags = []
             for tag_pred in output.tags:
-                # Normalize predicted tag: lowercase + spaces to underscores
-                tag_normalized = tag_pred.tag.lower().replace(" ", "_")
+                # Normalize predicted tag the same way
+                tag_normalized = normalize_tag(tag_pred.tag)
 
-                if tag_normalized not in allowed_tags_normalized:
+                if tag_normalized not in allowed_tags_map:
                     logger.warning(
                         f"Tag '{tag_pred.tag}' (normalized: '{tag_normalized}') not in allowed list, skipping"
                     )
                     continue
 
-                validated_tags.append({"tag": tag_normalized, "confidence": tag_pred.confidence})
+                # Use the original canonical tag name from allowed_tags
+                canonical_tag_name = allowed_tags_map[tag_normalized]
+                validated_tags.append({"tag": canonical_tag_name, "confidence": tag_pred.confidence})
 
             return {"tags": validated_tags}
 

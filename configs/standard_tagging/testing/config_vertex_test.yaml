@@ -40,6 +40,8 @@ pipeline:
         max_output_tokens: 2048
         temperature: 0.3
         top_p: 0.1
+      custom_system_prompt: null
+      custom_user_prompt: "coactive_user.txt"
 
   result_writer:
     type: "jsonl"
@@ -66,7 +68,8 @@ inference:
 
 paths:
   inputs_dir: "data/inputs"
-  label_file: "YoutubeAdvertisementsLabels.json"
+  label_file: "video_annotations_coactive.json"
+  tag_descriptions_file: "tag_descriptions_coactive.json"
   outputs_dir: "data/outputs"
   cache_dir: "data/cache/videos"
 

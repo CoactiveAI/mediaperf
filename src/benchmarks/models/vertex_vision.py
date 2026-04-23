@@ -29,6 +29,8 @@ class VertexVideoTagger(VideoTagger):
         location: str = DEFAULT_VERTEX_LOCATION,
         inference_params: Optional[Dict[str, Any]] = None,
         labels: Optional[Dict[str, str]] = None,
+        custom_system_prompt: Optional[str] = None,
+        custom_user_prompt: Optional[str] = None,
     ):
         self.model_id = model_id
         self.model_name = model_name
@@ -48,7 +50,12 @@ class VertexVideoTagger(VideoTagger):
             # Use default project from environment/credentials
             self.client = genai.Client(vertexai=True)
 
-        self._load_prompts(model_prefix="vertex", prompts_dir=TAGGING_PROMPTS_DIR)
+        self._load_prompts(
+            model_prefix="vertex",
+            prompts_dir=TAGGING_PROMPTS_DIR,
+            system_prompt_file=custom_system_prompt,
+            user_prompt_file=custom_user_prompt,
+        )
 
     def tag_video(
         self,

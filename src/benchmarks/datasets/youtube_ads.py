@@ -114,6 +114,53 @@ def read_advertisements_labels(
     return label_to_videos, label_descriptions_dict
 
 
+def read_video_annotations(
+    annotations_path: str,
+    tag_descriptions_path: str,
+    video_list: list[str],
+) -> Tuple[Dict[str, Set], Dict[str, LabelHolder]]:
+    """
+    Read video annotations from canonical JSON format.
+
+    Args:
+        annotations_path: Path to video_annotations.json
+        tag_descriptions_path: Path to tag_descriptions.json
+        video_list: List of video filenames to filter
+
+    Returns:
+        Tuple of (label_to_videos, label_descriptions_dict)
+    """
+    with open(annotations_path, encoding="utf-8") as f:
+        video_to_tags = json.load(f)
+
+    with open(tag_descriptions_path, encoding="utf-8") as f:
+        tag_descriptions_raw = json.load(f)
+
+    video_id_map = {}
+    for video_filename in video_list:
+        clean_id = extract_video_id(video_filename)
+        video_id_map[clean_id] = video_filename
+
+    label_to_videos = defaultdict(set)
+
+    for clean_id in video_id_map.keys():
+        if clean_id in video_to_tags:
+            tags = video_to_tags[clean_id]
+            for tag in tags:
+                label_to_videos[tag].add(clean_id)
+
+    # Build label descriptions for ALL available tags (not just tags in selected videos)
+    # This ensures the model sees all possible tags during inference
+    label_descriptions_dict = {}
+    for tag, description in tag_descriptions_raw.items():
+        label_descriptions_dict[tag] = LabelHolder(
+            description=description,
+            type="general",
+        )
+
+    return dict(label_to_videos), label_descriptions_dict
+
+
 def inverted_to_jsonl(inv_json: Dict[str, Set], out_jsonl: str) -> None:
     """
     Convert inverted index (label -> videos) to JSONL (video -> labels).
