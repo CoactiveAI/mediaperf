@@ -28,3 +28,22 @@ BEDROCK_TOP_K = 20
 VERTEX_MAX_OUTPUT_TOKENS = 2048
 VERTEX_TEMPERATURE = 0.3
 VERTEX_TOP_P = 0.1
+
+# Default inference params per model type
+DEFAULT_ANTHROPIC_INFERENCE_PARAMS = {"max_tokens": 1024}
+
+DEFAULT_BEDROCK_INFERENCE_PARAMS = {
+    "maxTokens": BEDROCK_MAX_TOKENS,
+    "temperature": BEDROCK_TEMPERATURE,
+    "topP": BEDROCK_TOP_P,
+}
+
+DEFAULT_OPENAI_INFERENCE_PARAMS = {}
+
+DEFAULT_VERTEX_INFERENCE_PARAMS = {
+    "max_output_tokens": VERTEX_MAX_OUTPUT_TOKENS,
+    "temperature": VERTEX_TEMPERATURE,
+    "top_p": VERTEX_TOP_P,
+}
+
+DEFAULT_QWEN_INFERENCE_PARAMS = {"max_tokens": 1024, "temperature": 0.3}
