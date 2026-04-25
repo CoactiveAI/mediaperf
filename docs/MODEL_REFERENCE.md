@@ -360,7 +360,9 @@ video_source:
     model_id: "gpt-5.1"
     model_name: "gpt-5_1"
     api_key_env: "OPENAI_API_KEY"
-    reasoning_effort: "low"  # Options: minimal, low, medium, high
+    inference_params:
+      reasoning:
+        effort: "low"  # Options: minimal, low, medium, high
 ```
 
 **Preprocessing**:
@@ -413,7 +415,9 @@ video_source:
     model_id: "gpt-5.4-2026-03-05"
     model_name: "gpt-5_4"
     api_key_env: "OPENAI_API_KEY"
-    reasoning_effort: "low"  # Options: minimal, low, medium, high
+    inference_params:
+      reasoning:
+        effort: "low"  # Options: minimal, low, medium, high
 ```
 
 **Preprocessing**:
@@ -452,7 +456,9 @@ video_source:
     model_id: "gpt-5-mini-2025-08-07"
     model_name: "gpt-5-mini"
     api_key_env: "OPENAI_API_KEY"
-    reasoning_effort: "low"  # Options: minimal, low, medium, high
+    inference_params:
+      reasoning:
+        effort: "low"  # Options: minimal, low, medium, high
 ```
 
 **Preprocessing**:
@@ -491,7 +497,9 @@ video_source:
     model_id: "gpt-5-nano-2025-08-07"
     model_name: "gpt-5-nano"
     api_key_env: "OPENAI_API_KEY"
-    reasoning_effort: "low"  # Options: minimal, low, medium, high
+    inference_params:
+      reasoning:
+        effort: "low"  # Options: minimal, low, medium, high
 ```
 
 **Preprocessing**:
