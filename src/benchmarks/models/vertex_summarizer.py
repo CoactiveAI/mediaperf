@@ -6,12 +6,10 @@ from google.genai import types
 from loguru import logger
 
 from ..constants import (
+    DEFAULT_VERTEX_INFERENCE_PARAMS,
     DEFAULT_VERTEX_LOCATION,
     DEFAULT_VERTEX_MODEL_ID,
     SUMMARIZATION_PROMPTS_DIR,
-    VERTEX_MAX_OUTPUT_TOKENS,
-    VERTEX_TEMPERATURE,
-    VERTEX_TOP_P,
 )
 from ..exceptions import FatalError
 from ..exceptions.gcp_errors import is_fatal_gcp_error
@@ -32,15 +30,9 @@ class VertexSummarizer(VideoSummarizer):
         system_prompt_file: Optional[str] = None,
         user_prompt_file: Optional[str] = None,
     ):
-        self.model_id = model_id
-        self.model_name = model_name
+        super().__init__(model_id, model_name, inference_params or DEFAULT_VERTEX_INFERENCE_PARAMS)
         self.project_id = project_id
         self.location = location
-        self.inference_params = inference_params or {
-            "max_output_tokens": VERTEX_MAX_OUTPUT_TOKENS,
-            "temperature": VERTEX_TEMPERATURE,
-            "top_p": VERTEX_TOP_P,
-        }
         self.labels = labels or {}
 
         # Create Vertex AI client
@@ -94,10 +86,8 @@ class VertexSummarizer(VideoSummarizer):
                 ],
                 config=types.GenerateContentConfig(
                     system_instruction=system_prompt,
-                    temperature=self.inference_params.get("temperature", VERTEX_TEMPERATURE),
-                    top_p=self.inference_params.get("top_p", VERTEX_TOP_P),
-                    max_output_tokens=self.inference_params.get("max_output_tokens", VERTEX_MAX_OUTPUT_TOKENS),
                     labels=self.labels,
+                    **self.inference_params,
                 ),
             )
             api_time = time.time() - api_start
