@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional
 from loguru import logger
 from openai import OpenAI
 
-from ..constants import TAGGING_PROMPTS_DIR
+from ..constants import DEFAULT_QWEN_INFERENCE_PARAMS, TAGGING_PROMPTS_DIR
 from ..exceptions import FatalError
 from ..exceptions.qwen_errors import is_fatal_qwen_error
 from .base import VideoTagger
@@ -19,16 +19,12 @@ class QwenVideoTagger(VideoTagger):
         base_url: str,
         model_id: str,
         model_name: str = None,
-        max_tokens: int = 1024,
-        temperature: float = 0.3,
+        inference_params: Dict = None,
         custom_system_prompt: Optional[str] = None,
         custom_user_prompt: Optional[str] = None,
     ):
+        super().__init__(model_id, model_name, inference_params or DEFAULT_QWEN_INFERENCE_PARAMS)
         self.client = OpenAI(api_key=api_key, base_url=base_url)
-        self.model_id = model_id
-        self.model_name = model_name
-        self.max_tokens = max_tokens
-        self.temperature = temperature
         self._load_prompts(
             model_prefix="qwen",
             prompts_dir=TAGGING_PROMPTS_DIR,
@@ -75,8 +71,7 @@ class QwenVideoTagger(VideoTagger):
             response = self.client.chat.completions.create(
                 model=self.model_id,
                 messages=messages,
-                max_tokens=self.max_tokens,
-                temperature=self.temperature,
+                **self.inference_params,
             )
             api_time = time.time() - api_start
 
