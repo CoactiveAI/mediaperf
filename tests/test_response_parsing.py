@@ -8,6 +8,9 @@ from benchmarks.models.base import VideoTagger
 class MockTagger(VideoTagger):
     """Minimal implementation for testing base class."""
 
+    def __init__(self):
+        super().__init__(model_id="mock-model", model_name="mock-tagger")
+
     def tag_video(self, video_source, allowed_tags, tag_definitions, **kwargs):
         return {"tags": []}
 
