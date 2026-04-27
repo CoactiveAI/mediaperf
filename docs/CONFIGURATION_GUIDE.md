@@ -308,9 +308,14 @@ pipeline:
     type: <registry_key>  # See Model Reference
     config:
       model_id: <model_id_or_arn>  # Model ID or inference profile ARN (Bedrock only)
+      model_name: <model_name>
+      inference_params:  # Optional: model-specific inference parameters
+        # Parameters vary by model - see Model Reference Guide
 ```
 
 **Registry Keys**: `anthropic_vision`, `bedrock_vision`, `openai_vision`, `vertex_vision`, `qwen_vision`
+
+**Inference Parameters**: All models except Bedrock support an optional `inference_params` dict for model-specific parameters (e.g., `max_tokens`, `temperature`, `reasoning` for OpenAI). Parameters are passed directly to the model API. Bedrock support will come in a future update. See [Model Reference Guide](MODEL_REFERENCE.md) for model-specific options.
 
 **Note**: For Bedrock models, `model_id` can be either a model ID (e.g., `"us.amazon.nova-lite-v2:0"`) or an inference profile ARN for cost tracking purposes. See [Cost Calculation Guide](COST_CALCULATION_GUIDE.md) for details on creating tagged inference profiles.
 
@@ -324,10 +329,16 @@ pipeline:
 pipeline:
   summarizer:
     type: <registry_key>  # See Model Reference
-    config: {}            # Model-specific parameters
+    config:
+      model_id: <model_id>
+      model_name: <model_name>
+      inference_params:  # Optional: model-specific inference parameters
+        # Parameters vary by model - see Model Reference Guide
 ```
 
 **Registry Keys**: `anthropic_summarizer`, `bedrock_summarizer`, `openai_summarizer`, `vertex_summarizer`, `qwen_summarizer`
+
+**Inference Parameters**: All models except Bedrock support an optional `inference_params` dict for model-specific parameters. Bedrock support will come in a future update. See [Model Reference Guide](MODEL_REFERENCE.md) for model-specific options.
 
 **All parameters are model-specific**. See [Model Reference Guide](MODEL_REFERENCE.md) for complete config examples.
 
@@ -339,10 +350,16 @@ pipeline:
 pipeline:
   judge:
     type: "openai_judge"
-    config: {}  # Model-specific parameters
+    config:
+      model_id: <model_id>
+      model_name: <model_name>
+      inference_params:  # Optional: model-specific inference parameters
+        # Parameters vary by model - see Model Reference Guide
 ```
 
 **Currently Supported**: `openai_judge` only
+
+**Inference Parameters**: Supports an optional `inference_params` dict for model-specific parameters (e.g., `reasoning` for OpenAI). See [Model Reference Guide](MODEL_REFERENCE.md) for options.
 
 ---
 

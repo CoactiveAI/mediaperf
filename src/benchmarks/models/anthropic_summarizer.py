@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional
 from anthropic import Anthropic
 from loguru import logger
 
-from ..constants import DEFAULT_ANTHROPIC_MODEL, SUMMARIZATION_PROMPTS_DIR
+from ..constants import DEFAULT_ANTHROPIC_INFERENCE_PARAMS, DEFAULT_ANTHROPIC_MODEL, SUMMARIZATION_PROMPTS_DIR
 from ..exceptions import FatalError
 from ..exceptions.anthropic_errors import is_fatal_anthropic_error
 from .base_summarizer import VideoSummarizer
@@ -18,12 +18,12 @@ class AnthropicSummarizer(VideoSummarizer):
         api_key: str,
         model_id: str = DEFAULT_ANTHROPIC_MODEL,
         model_name: str = None,
+        inference_params: Optional[Dict[str, Any]] = None,
         system_prompt_file: Optional[str] = None,
         user_prompt_file: Optional[str] = None,
     ):
+        super().__init__(model_id, model_name, inference_params or DEFAULT_ANTHROPIC_INFERENCE_PARAMS)
         self.client = Anthropic(api_key=api_key)
-        self.model_id = model_id
-        self.model_name = model_name
         self._load_prompts(
             model_prefix="anthropic",
             prompts_dir=SUMMARIZATION_PROMPTS_DIR,
@@ -57,27 +57,30 @@ class AnthropicSummarizer(VideoSummarizer):
 
         # Add all frames as image blocks
         for b64_frame in video_source:
-            content.append({
-                "type": "image",
-                "source": {
-                    "type": "base64",
-                    "media_type": "image/jpeg",
-                    "data": b64_frame,
-                },
-            })
+            content.append(
+                {
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": "image/jpeg",
+                        "data": b64_frame,
+                    },
+                }
+            )
 
         # Add text prompt at the end
-        content.append({
-            "type": "text",
-            "text": user_text,
-        })
+        content.append(
+            {
+                "type": "text",
+                "text": user_text,
+            }
+        )
 
         try:
             # Measure API call time
             api_start = time.time()
             response = self.client.messages.create(
                 model=self.model_id,
-                max_tokens=2048,
                 system=system_prompt,
                 messages=[
                     {
@@ -85,11 +88,20 @@ class AnthropicSummarizer(VideoSummarizer):
                         "content": content,
                     }
                 ],
+                **self.inference_params,
             )
             api_time = time.time() - api_start
 
             # Extract summary from response
-            summary_text = response.content[0].text
+            # Handle both TextBlock and ThinkingBlock (extended thinking models)
+            summary_text = None
+            for block in response.content:
+                if hasattr(block, "text"):
+                    summary_text = block.text
+                    break
+
+            if summary_text is None:
+                raise ValueError("No text content found in response")
 
             # Debug log: show the response from the model
             logger.debug("=" * 80)

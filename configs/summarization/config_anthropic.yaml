@@ -1,4 +1,4 @@
-# Supports: claude-opus-4-6, claude-sonnet-4-5, claude-haiku-4-5 (update model_id and model_name)
+# Supports: claude-opus-4-6, claude-sonnet-4-6, claude-haiku-4-5 (update model_id and model_name)
 
 task_type: "summarization"
 
@@ -38,6 +38,8 @@ pipeline:
       model_id: "claude-haiku-4-5"
       model_name: "claude-haiku-4.5"
       api_key_env: "ANTHROPIC_API_KEY"
+      inference_params:
+        max_tokens: 2048
       user_prompt_file: "universal_user.txt"
 
   result_writer:

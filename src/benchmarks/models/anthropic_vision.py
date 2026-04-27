@@ -4,7 +4,7 @@ from typing import Dict, List
 from anthropic import Anthropic
 from loguru import logger
 
-from ..constants import DEFAULT_ANTHROPIC_MODEL, TAGGING_PROMPTS_DIR
+from ..constants import DEFAULT_ANTHROPIC_INFERENCE_PARAMS, DEFAULT_ANTHROPIC_MODEL, TAGGING_PROMPTS_DIR
 from ..exceptions import FatalError
 from ..exceptions.anthropic_errors import is_fatal_anthropic_error
 from ..schemas import TagsOutput
@@ -19,12 +19,12 @@ class AnthropicVideoTagger(VideoTagger):
         api_key: str,
         model_id: str = DEFAULT_ANTHROPIC_MODEL,
         model_name: str = None,
+        inference_params: Dict = None,
         custom_system_prompt: str = None,
         custom_user_prompt: str = None,
     ):
+        super().__init__(model_id, model_name, inference_params or DEFAULT_ANTHROPIC_INFERENCE_PARAMS)
         self.client = Anthropic(api_key=api_key)
-        self.model_id = model_id
-        self.model_name = model_name
         self._load_prompts(
             model_prefix="anthropic",
             prompts_dir=TAGGING_PROMPTS_DIR,
@@ -77,7 +77,6 @@ class AnthropicVideoTagger(VideoTagger):
             api_start = time.time()
             response = self.client.messages.parse(
                 model=self.model_id,
-                max_tokens=1024,
                 system=system_prompt,
                 messages=[
                     {
@@ -86,6 +85,7 @@ class AnthropicVideoTagger(VideoTagger):
                     }
                 ],
                 output_format=TagsOutput,
+                **self.inference_params,
             )
             api_time = time.time() - api_start
 

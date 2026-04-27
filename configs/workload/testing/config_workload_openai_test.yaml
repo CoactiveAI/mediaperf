@@ -62,7 +62,9 @@ pipeline:
       model_id: "gpt-5.1"
       model_name: "gpt-5_1"
       api_key_env: "OPENAI_API_KEY"
-      reasoning_effort: "low"
+      inference_params:
+        reasoning:
+          effort: "low"
 
   result_writer:
     type: "jsonl"

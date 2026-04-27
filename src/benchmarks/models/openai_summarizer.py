@@ -5,8 +5,8 @@ from loguru import logger
 from openai import OpenAI
 
 from ..constants import (
+    DEFAULT_OPENAI_INFERENCE_PARAMS,
     DEFAULT_OPENAI_MODEL,
-    DEFAULT_OPENAI_REASONING_EFFORT,
     SUMMARIZATION_PROMPTS_DIR,
 )
 from ..exceptions import FatalError
@@ -22,14 +22,12 @@ class OpenAISummarizer(VideoSummarizer):
         api_key: str,
         model_id: str = DEFAULT_OPENAI_MODEL,
         model_name: str = None,
-        reasoning_effort: str = DEFAULT_OPENAI_REASONING_EFFORT,
+        inference_params: dict = None,
         system_prompt_file: Optional[str] = None,
         user_prompt_file: Optional[str] = None,
     ):
+        super().__init__(model_id, model_name, inference_params or DEFAULT_OPENAI_INFERENCE_PARAMS)
         self.client = OpenAI(api_key=api_key)
-        self.model_id = model_id
-        self.model_name = model_name
-        self.reasoning_effort = reasoning_effort
         self._load_prompts(
             model_prefix="openai",
             prompts_dir=SUMMARIZATION_PROMPTS_DIR,
@@ -80,6 +78,7 @@ class OpenAISummarizer(VideoSummarizer):
                         "content": user_content,
                     },
                 ],
+                **self.inference_params,
             )
             api_time = time.time() - api_start
 

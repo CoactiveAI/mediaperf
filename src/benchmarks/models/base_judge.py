@@ -12,6 +12,19 @@ from ..schemas import SummaryEvaluationOutput
 class LLMJudge(ABC):
     """Abstract base class for LLM judge models."""
 
+    def __init__(
+        self,
+        model_id: str,
+        model_name: str,
+        inference_params: Optional[Dict[str, Any]] = None,
+    ):
+        self.model_id = model_id
+        self.model_name = model_name
+        self.inference_params = inference_params or {}
+        logger.info(
+            f"Initialized {self.__class__.__name__} with model: {model_id}, inference_params: {self.inference_params}"
+        )
+
     @abstractmethod
     def evaluate_summary(
         self,

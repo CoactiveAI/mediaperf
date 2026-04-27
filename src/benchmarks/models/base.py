@@ -12,6 +12,19 @@ from ..schemas import TagsOutput
 class VideoTagger(ABC):
     """Abstract base class for video tagging models."""
 
+    def __init__(
+        self,
+        model_id: str,
+        model_name: str,
+        inference_params: Optional[Dict[str, Any]] = None,
+    ):
+        self.model_id = model_id
+        self.model_name = model_name
+        self.inference_params = inference_params or {}
+        logger.info(
+            f"Initialized {self.__class__.__name__} with model: {model_id}, inference_params: {self.inference_params}"
+        )
+
     @abstractmethod
     def tag_video(
         self, video_source: str, allowed_tags: List[str], tag_definitions: Dict[str, str], **kwargs

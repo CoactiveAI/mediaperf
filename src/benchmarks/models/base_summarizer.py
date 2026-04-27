@@ -12,6 +12,19 @@ from ..schemas import SummaryOutput
 class VideoSummarizer(ABC):
     """Abstract base class for video summarization models."""
 
+    def __init__(
+        self,
+        model_id: str,
+        model_name: str,
+        inference_params: Optional[Dict[str, Any]] = None,
+    ):
+        self.model_id = model_id
+        self.model_name = model_name
+        self.inference_params = inference_params or {}
+        logger.info(
+            f"Initialized {self.__class__.__name__} with model: {model_id}, inference_params: {self.inference_params}"
+        )
+
     @abstractmethod
     def summarize_video(
         self,
