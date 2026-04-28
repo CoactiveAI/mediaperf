@@ -19,11 +19,11 @@ from .models.base_judge import LLMJudge
 from .models.base_summarizer import VideoSummarizer
 from .models.bedrock_summarizer import BedrockVideoSummarizer
 from .models.bedrock_vision import BedrockVideoTagger
+from .models.openai_compatible_summarizer import OpenAICompatibleSummarizer
+from .models.openai_compatible_vision import OpenAICompatibleTagger
 from .models.openai_judge import OpenAILLMJudge
 from .models.openai_summarizer import OpenAISummarizer
 from .models.openai_vision import OpenAIVideoTagger
-from .models.qwen_summarizer import QwenSummarizer
-from .models.qwen_vision import QwenVideoTagger
 from .models.vertex_summarizer import VertexSummarizer
 from .models.vertex_vision import VertexVideoTagger
 from .preprocessing.base import VideoPreprocessor
@@ -50,7 +50,7 @@ TAGGER_REGISTRY: Dict[str, Type[VideoTagger]] = {
     "openai_vision": OpenAIVideoTagger,
     "bedrock_vision": BedrockVideoTagger,
     "vertex_vision": VertexVideoTagger,
-    "qwen_vision": QwenVideoTagger,
+    "openai_compatible_vision": OpenAICompatibleTagger,
 }
 
 SUMMARIZER_REGISTRY: Dict[str, Type[VideoSummarizer]] = {
@@ -58,7 +58,7 @@ SUMMARIZER_REGISTRY: Dict[str, Type[VideoSummarizer]] = {
     "bedrock_summarizer": BedrockVideoSummarizer,
     "openai_summarizer": OpenAISummarizer,
     "vertex_summarizer": VertexSummarizer,
-    "qwen_summarizer": QwenSummarizer,
+    "openai_compatible_summarizer": OpenAICompatibleSummarizer,
 }
 
 LLM_JUDGE_REGISTRY: Dict[str, Type[LLMJudge]] = {

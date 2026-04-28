@@ -635,11 +635,11 @@ video_source:
 
 ---
 
-## Self-Hosted Models
+## Self-Hosted OpenAI-Compatible Models
 
 ### Qwen3-VL-30B-A3B-Instruct-FP8
 
-**Registry Key**: `qwen_vision`, `qwen_summarizer`
+**Registry Key**: `openai_compatible_vision`, `openai_compatible_summarizer`
 
 **Model**: Self-hosted Qwen3-VL-30B-A3B-Instruct-FP8 via OpenAI-compatible endpoint.
 
@@ -656,9 +656,10 @@ video_source:
   type: <task type>
   config:
     base_url: "https://your-server.com/v1"
-    api_key_env: "QWEN_API_KEY"
+    api_key: "your-api-key"  # or set via environment variable
     model_id: "Qwen3-VL-30B-A3B-Instruct-FP8"
     model_name: "qwen3-vl-30b"
+    model_prefix: "qwen"  # Uses qwen_system.txt and qwen_user.txt prompts
 ```
 
 **Preprocessing:**:

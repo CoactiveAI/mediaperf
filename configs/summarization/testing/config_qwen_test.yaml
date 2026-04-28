@@ -33,7 +33,7 @@ pipeline:
       cache_dir: "data/cache/videos"
 
   summarizer:
-    type: "qwen_summarizer"
+    type: "openai_compatible_summarizer"
     config:
       base_url: "https://your-qwen-endpoint.com/v1"
       api_key_env: "QWEN_API_KEY"

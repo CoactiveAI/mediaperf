@@ -6,14 +6,14 @@ A production-ready framework to evaluate the video understanding performance of 
 
 ## Key Features
 
-- **16 vision-language models**: Benchmarking across AWS Bedrock (Nova, Pegasus, NVIDIA), Google Vertex AI (Gemini), OpenAI (GPT), Anthropic (Claude), and self-hosted (Qwen). See [Model Reference Guide](docs/MODEL_REFERENCE.md) for complete list and details.
+- **16 vision-language models**: Benchmarking across AWS Bedrock (Nova, Pegasus, NVIDIA), Google Vertex AI (Gemini), OpenAI (GPT), Anthropic (Claude), and self-hosted OpenAI-compatible models (Qwen). See [Model Reference Guide](docs/MODEL_REFERENCE.md) for complete list and details.
 - **4 task types**:
   - Standard tagging
   - Tagging and refinement workload
   - Summarization
   - Summary Evaluation
 - **Config Validation**: Pydantic-based validation catches errors before expensive operations
-- **Multi-Cloud Support**: AWS Bedrock, OpenAI, Google Vertex AI, Anthropic (Claude), Self-Hosted (Qwen)
+- **Multi-Cloud Support**: AWS Bedrock, OpenAI, Google Vertex AI, Anthropic (Claude), Self-Hosted OpenAI-compatible models
 - **Config-Driven**: Zero-code model swapping and experimentation
 - **Smart Caching**: Frame reuse across runs with S3/GCS/Local storage backends
 - **Comprehensive Tracking**: Token usage, API costs, timing metrics
@@ -63,7 +63,7 @@ We augment this dataset with additional summaries for the same video data from h
 - OpenAI API (GPT 5.1, GPT 5.4, GPT 5 Mini, GPT 5 Nano)
 - Google Vertex AI (Gemini 2.5 Pro, Gemini 3.0 Pro, Gemini 3.1 Pro, Gemini 3.1 Flash-Lite)
 - Anthropic API (Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5)
-- Self-Hosted Qwen (Qwen3-VL-30B-A3B-Instruct-FP8)
+- Self-Hosted OpenAI-compatible models (Qwen3-VL-30B-A3B-Instruct-FP8)
 - Pydantic v2 for config validation
 - python-dotenv for environment loading
 - OpenCV for video processing
