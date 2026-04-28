@@ -6,12 +6,12 @@ from openai import OpenAI
 
 from ..constants import DEFAULT_QWEN_INFERENCE_PARAMS, SUMMARIZATION_PROMPTS_DIR
 from ..exceptions import FatalError
-from ..exceptions.qwen_errors import is_fatal_qwen_error
+from ..exceptions.openai_errors import is_fatal_openai_error
 from .base_summarizer import VideoSummarizer
 
 
-class QwenSummarizer(VideoSummarizer):
-    """Video summarizer using Qwen vision models via OpenAI-compatible API."""
+class OpenAICompatibleSummarizer(VideoSummarizer):
+    """Video summarizer using OpenAI-compatible API. Use model_prefix to specify prompts."""
 
     def __init__(
         self,
@@ -20,13 +20,14 @@ class QwenSummarizer(VideoSummarizer):
         model_id: str,
         model_name: str = None,
         inference_params: Dict = None,
+        model_prefix: str = "qwen",
         system_prompt_file: Optional[str] = None,
         user_prompt_file: Optional[str] = None,
     ):
         super().__init__(model_id, model_name, inference_params or DEFAULT_QWEN_INFERENCE_PARAMS)
         self.client = OpenAI(api_key=api_key, base_url=base_url)
         self._load_prompts(
-            model_prefix="qwen",
+            model_prefix=model_prefix,
             prompts_dir=SUMMARIZATION_PROMPTS_DIR,
             system_prompt_file=system_prompt_file,
             user_prompt_file=user_prompt_file,
@@ -109,10 +110,10 @@ class QwenSummarizer(VideoSummarizer):
             return result
 
         except Exception as e:
-            if is_fatal_qwen_error(e):
-                raise FatalError(f"Qwen error: {e}") from e
+            if is_fatal_openai_error(e):
+                raise FatalError(f"OpenAI-compatible API error: {e}") from e
             # Not fatal - propagate as-is
-            logger.error(f"Qwen API call failed: {e}")
+            logger.error(f"OpenAI-compatible API call failed: {e}")
             raise
 
     def get_model_name(self) -> str:
