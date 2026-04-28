@@ -57,7 +57,7 @@ pipeline:
       cache_dir: "data/cache/videos"
 
   tagger:
-    type: "qwen_vision"
+    type: "openai_compatible_vision"
     config:
       base_url: "https://your-qwen-endpoint.com/v1"
       api_key_env: "QWEN_API_KEY"
