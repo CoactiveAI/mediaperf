@@ -700,6 +700,22 @@ video_source:
 - `enable_thinking: false` — disables chain-of-thought reasoning (recommended for video tagging)
 - `use_audio_in_video: true` — enables audio track processing alongside video frames
 
+**Tested Hardware**:
+- **Instance**: AWS EC2 `g7e.8xlarge`
+- **GPU**: NVIDIA RTX PRO 6000 Blackwell (96GB VRAM)
+
+**Recommended vLLM serve flags**:
+```bash
+vllm serve ... \
+  --media-io-kwargs '{"video":{"num_frames":256,"fps":2}}' \
+  --tensor-parallel-size 1 \
+  --trust-remote-code \
+  --video-pruning-rate 0.5 \
+  --mamba-ssm-cache-dtype=float32 \
+  --kv-cache-dtype fp8 \
+  --moe-backend triton  # RTX PRO 6000 Blackwell only
+```
+
 ---
 
 ### Qwen3-VL-30B-A3B-Instruct-FP8
@@ -748,6 +764,9 @@ video_source:
 ```
 
 **Cost**: Depends on hosting setup (compute, storage, bandwidth)
+
+**Tested Hardware**:
+- **Cluster**: Anyscale cluster with autoscaling L40S GPU instances (48GB VRAM each), up to 10 instances
 
 ---
 
