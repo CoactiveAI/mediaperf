@@ -313,7 +313,7 @@ pipeline:
         # Parameters vary by model - see Model Reference Guide
 ```
 
-**Registry Keys**: `anthropic_vision`, `bedrock_vision`, `openai_vision`, `vertex_vision`, `qwen_vision`
+**Registry Keys**: `anthropic_vision`, `bedrock_vision`, `openai_vision`, `vertex_vision`, `openai_compatible_vision`
 
 **Inference Parameters**: All models except Bedrock support an optional `inference_params` dict for model-specific parameters (e.g., `max_tokens`, `temperature`, `reasoning` for OpenAI). Parameters are passed directly to the model API. Bedrock support will come in a future update. See [Model Reference Guide](MODEL_REFERENCE.md) for model-specific options.
 
@@ -336,7 +336,7 @@ pipeline:
         # Parameters vary by model - see Model Reference Guide
 ```
 
-**Registry Keys**: `anthropic_summarizer`, `bedrock_summarizer`, `openai_summarizer`, `vertex_summarizer`, `qwen_summarizer`
+**Registry Keys**: `anthropic_summarizer`, `bedrock_summarizer`, `openai_summarizer`, `vertex_summarizer`, `openai_compatible_summarizer`
 
 **Inference Parameters**: All models except Bedrock support an optional `inference_params` dict for model-specific parameters. Bedrock support will come in a future update. See [Model Reference Guide](MODEL_REFERENCE.md) for model-specific options.
 
@@ -421,7 +421,7 @@ Change `type` (registry key) and update `config` with model-specific parameters:
 
 ```yaml
 tagger:
-  type: "bedrock_vision"  # or "anthropic_vision", "openai_vision", "vertex_vision", "qwen_vision"
+  type: "bedrock_vision"  # or "anthropic_vision", "openai_vision", "vertex_vision", "openai_compatible_vision"
   config: {}              # See Model Reference Guide
 ```
 
