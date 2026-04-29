@@ -1,0 +1,19 @@
+Analyze this video and assign relevant tags with confidence scores.
+
+ALLOWED TAGS (select ONLY from these):
+{tags_formatted}
+
+INSTRUCTIONS:
+1. Watch the entire video carefully
+2. Select tags that accurately describe the video content
+3. Assign confidence scores (0.0 to 1.0) based on how prominently each tag applies
+4. Only include tags that are clearly present
+5. Respond with ONLY valid JSON (no other text)
+
+REQUIRED JSON FORMAT:
+{{
+  "tags": [
+    {{"tag": "tag_from_allowed_list", "confidence": 0.95}},
+    {{"tag": "another_allowed_tag", "confidence": 0.75}}
+  ]
+}}
