@@ -292,6 +292,8 @@ Additional information can be found in the `docs/` directory:
 
 - **[Cost Calculation Guide](docs/COST_CALCULATION_GUIDE.md)** - Tracking and calculating costs for AWS, GCP, and model inference
 
+- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute new models, bug fixes, and other improvements
+
 ## Known Limitations
 
 MediaPerf delivers a production-ready benchmark for real media tasks today. The following are areas where future iterations can extend its coverage and value further. Contributions are welcome — whether that's code to this repo, licensed data for benchmarking, or joining our working group.
@@ -309,6 +311,12 @@ MediaPerf delivers a production-ready benchmark for real media tasks today. The 
 The source code in this repository is licensed under the **Apache License 2.0**. See [LICENSE](LICENSE) for details.
 
 Our human-annotated summaries and tags are licensed under the **Creative Commons Attribution 4.0 International License (CC-BY 4.0)**. See [LICENSE-DATA](LICENSE-DATA) for details.
+
+## Acknowledgements
+
+- **Juan Aguilar** (juan-co@coactive.ai) — Design & Implementation
+- **Seby Jacob** (seby@coactive.ai) — Technical & Research Advisory
+- **Ali Harakeh** (ali@coactive.ai) — Technical & Research Advisory
 
 ## References
 

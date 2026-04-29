@@ -88,7 +88,7 @@ video_source:
 
 ---
 
-### Amazon Pegasus 1.2
+### Twelve Labs Pegasus 1.2
 
 **Model ID**: `us.twelvelabs.pegasus-1-2-v1:0`
 
@@ -128,6 +128,7 @@ video_source:
 
 **Known Issues**:
 - Requires `invoke_model()` API instead of `converse()`
+- Not benchmarked for the 100-tag task: input text token limit (~2k tokens) is insufficient to pass the full 100-tag prompt
 
 ---
 
@@ -280,6 +281,9 @@ video_source:
 **Cost** (per 1M tokens):
 - Input: $2.00
 - Output: $12.00
+
+**Known Issues**:
+- Not benchmarked for the 100-tag task: model was deprecated and the Vertex AI endpoint was no longer reachable at the time of benchmarking
 
 ---
 
@@ -696,6 +700,22 @@ video_source:
 - `enable_thinking: false` — disables chain-of-thought reasoning (recommended for video tagging)
 - `use_audio_in_video: true` — enables audio track processing alongside video frames
 
+**Tested Hardware**:
+- **Instance**: AWS EC2 `g7e.8xlarge`
+- **GPU**: NVIDIA RTX PRO 6000 Blackwell (96GB VRAM)
+
+**Recommended vLLM serve flags**:
+```bash
+vllm serve ... \
+  --media-io-kwargs '{"video":{"num_frames":256,"fps":2}}' \
+  --tensor-parallel-size 1 \
+  --trust-remote-code \
+  --video-pruning-rate 0.5 \
+  --mamba-ssm-cache-dtype=float32 \
+  --kv-cache-dtype fp8 \
+  --moe-backend triton  # RTX PRO 6000 Blackwell only
+```
+
 ---
 
 ### Qwen3-VL-30B-A3B-Instruct-FP8
@@ -744,6 +764,9 @@ video_source:
 ```
 
 **Cost**: Depends on hosting setup (compute, storage, bandwidth)
+
+**Tested Hardware**:
+- **Cluster**: Anyscale cluster with autoscaling L40S GPU instances (48GB VRAM each), up to 10 instances
 
 ---
 
