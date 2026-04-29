@@ -88,7 +88,7 @@ video_source:
 
 ---
 
-### Amazon Pegasus 1.2
+### Twelve Labs Pegasus 1.2
 
 **Model ID**: `us.twelvelabs.pegasus-1-2-v1:0`
 
