@@ -310,6 +310,12 @@ The source code in this repository is licensed under the **Apache License 2.0**.
 
 Our human-annotated summaries and tags are licensed under the **Creative Commons Attribution 4.0 International License (CC-BY 4.0)**. See [LICENSE-DATA](LICENSE-DATA) for details.
 
+## Acknowledgements
+
+- **Juan Aguilar** (juan-co@coactive.ai) — Design & Implementation
+- **Seby Jacob** (seby@coactive.ai) — Technical & Research Advisory
+- **Ali Harakeh** (ali@coactive.ai) — Technical & Research Advisory
+
 ## References
 
 [1] Zaeem Hussain, Mingda Zhang, Xiaozhong Zhang, Keren Ye, Christopher Thomas, Zuha Agha, Nathan Ong, Adriana Kovashka. "Automatic Understanding of Image and Video Advertisements." *Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)*, 2017, pp. 1705-1715. [Link](https://openaccess.thecvf.com/content_cvpr_2017/papers/Hussain_Automatic_Understanding_of_CVPR_2017_paper.pdf)
