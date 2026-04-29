@@ -401,13 +401,15 @@ pipeline:
 
 For complete working examples, see the test configs in each task directory:
 
-- **Standard Tagging (GPT)**: `configs/standard_tagging/testing/config_gpt_test.yaml`
+- **Standard Tagging (GPT)**: `configs/standard_tagging/testing/config_openai_test.yaml`
 - **Standard Tagging (Anthropic)**: `configs/standard_tagging/testing/config_anthropic_test.yaml`
-- **Workload Benchmark (Pegasus)**: `configs/workload/testing/config_workload_bedrock_pegasus_1_2_test.yaml`
+- **Standard Tagging (Qwen, self-hosted)**: `configs/standard_tagging/testing/config_qwen_test.yaml`
+- **Standard Tagging (NVIDIA Nemotron 3 Nano Omni, vLLM)**: `configs/standard_tagging/testing/config_nvidia_vllm_test.yaml`
+- **Workload Benchmark (Pegasus)**: `configs/workload/testing/config_workload_bedrock_pegasus_test.yaml`
 - **Workload Benchmark (Anthropic)**: `configs/workload/testing/config_workload_anthropic_test.yaml`
-- **Summarization (NVIDIA)**: `configs/summarization/testing/config_bedrock_nvidia_test.yaml`
+- **Summarization (NVIDIA Nemotron Nano 12B v2, Bedrock)**: `configs/summarization/testing/config_bedrock_nvidia_test.yaml`
 - **Summarization (Anthropic)**: `configs/summarization/testing/config_anthropic_test.yaml`
-- **Summary Evaluation (Gemini)**: `configs/summary_evaluation/testing/config_openai_judge_gemini_2_5_pro_test.yaml`
+- **Summary Evaluation**: `configs/summary_evaluation/testing/config_openai_judge_test.yaml`
 
 These test configs demonstrate all configuration sections with working values for quick testing on small video sets.
 
