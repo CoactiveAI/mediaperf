@@ -1,0 +1,109 @@
+# NVIDIA Nemotron 3 Nano Omni via OpenAI-compatible API (self-hosted vLLM server)
+
+task_type: "cost_benchmark"
+
+logging:
+  level: "INFO"
+
+tracking:
+  return_usage: true
+  progress_interval: 50
+
+pricing:
+  input_per_1m_tokens: 0.0
+  output_per_1m_tokens: 0.0
+
+cost_benchmark:
+  iterations:
+    - iteration: 1
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_1.txt"
+      skip_tag_injection: true
+
+    - iteration: 2
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_2.txt"
+      skip_tag_injection: true
+
+    - iteration: 3
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_3.txt"
+      skip_tag_injection: true
+
+    - iteration: 4
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_4.txt"
+      skip_tag_injection: true
+
+    - iteration: 5
+      prompt_path: "src/benchmarks/models/prompts/workload/user_prompt_iter_5.txt"
+      skip_tag_injection: true
+
+  metrics_output_path: "cost_benchmark_metrics_qwen.json"
+
+video_source:
+  type: "s3"
+  mode: "local"
+  s3:
+    bucket: "your-s3-bucket"
+    prefix: "youtube_ads_dataset_h264/"
+    region: "us-east-2"
+
+video_selection:
+  mode: "duration_based"
+  target_minutes: 1000
+  metadata_file: "data/inputs/youtube_ads_video_metadata.json"
+  order: "longest"
+  resolution: null
+
+pipeline:
+  preprocessor:
+    type: "video_base64"
+    config:
+      cache_dir: "data/cache/videos_h264"
+
+  tagger:
+    type: "openai_compatible_vision"
+    config:
+      base_url: "https://your-nvidia-vllm-endpoint.com/v1"
+      api_key: "not-needed"  # Add if needed
+      model_id: "model"  # Served model name (--served-model-name=model)
+      model_name: "nvidia-3-nemotron-nano-omni"
+      model_prefix: "nvidia"  # Use NVIDIA prompts
+      inference_params:
+        max_tokens: 2048
+        temperature: 0.2
+        extra_body:
+          chat_template_kwargs:
+            enable_thinking: false  # Disable reasoning for video (recommended)
+          mm_processor_kwargs:
+            use_audio_in_video: true  # Process audio track in videos
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/workload_benchmark_results_nvidia.jsonl"
+
+  metrics:
+    type: "multilabel_classification"
+    config:
+      pred_key: "video_level_tags"
+      gt_key: "tags"
+      exclude_tags: ['funny', 'effective', 'exciting']
+      exclude_failures: true
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+inference:
+  threshold: 0.5
+  ignore_threshold: true
+  test_tags: null
+
+paths:
+  inputs_dir: "data/inputs"
+  label_file: "video_annotations_youtube_ads.json"
+  tag_descriptions_file: "tag_descriptions_youtube_ads.json"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"
+
+labels:
+  gt_threshold: 0.5

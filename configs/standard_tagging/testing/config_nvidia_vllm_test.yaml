@@ -1,0 +1,87 @@
+# NVIDIA Nemotron 3 Nano Omni via OpenAI-compatible API (self-hosted vLLM server)
+
+logging:
+  level: "DEBUG"
+
+tracking:
+  return_usage: true
+  progress_interval: 1
+
+pricing:
+  input_per_1m_tokens: 0.0  # Self-hosted, no per-token cost
+  output_per_1m_tokens: 0.0  # Self-hosted, no per-token cost
+
+video_source:
+  type: "s3"
+  mode: "local"
+  s3:
+    bucket: "your-s3-bucket"
+    prefix: "youtube_ads_dataset_h264/"
+    region: "us-east-2"
+
+video_selection:
+  mode: "fixed"  # Options: "fixed", "random", "all", or "duration_based"
+
+  # For 'fixed' mode: specify exact video IDs to process
+  fixed_videos:
+    - "vid_-1yXdOufzKE.mp4" # h.264
+    - "vid_-44_igsZtgU.mp4" # AV1
+    - "vid_-DFuMqROFCQ.mp4" # VP9
+
+pipeline:
+  preprocessor:
+    type: "video_base64"
+    config:
+      cache_dir: "data/cache/videos_h264"
+
+  tagger:
+    type: "openai_compatible_vision"
+    config:
+      base_url: "https://your-nvidia-vllm-endpoint.com/v1"
+      api_key: "not-needed"  # Add if needed
+      model_id: "model"  # Served model name (--served-model-name=model)
+      model_name: "nvidia-3-nemotron-nano-omni"
+      model_prefix: "nvidia"  # Use NVIDIA prompts
+      inference_params:
+        max_tokens: 4096
+        temperature: 0.2
+        extra_body:
+          chat_template_kwargs:
+            enable_thinking: false  # Disable reasoning for video (recommended)
+          mm_processor_kwargs:
+            use_audio_in_video: true  # Process audio track in videos
+      custom_system_prompt: null
+      custom_user_prompt: "coactive_user.txt"
+
+  result_writer:
+    type: "jsonl"
+    config:
+      output_path: "data/outputs/video_level_tags_nvidia.jsonl"
+
+  metrics:
+    type: "multilabel_classification"
+    config:
+      pred_key: "video_level_tags"
+      gt_key: "tags"
+      exclude_tags: ['funny', 'effective', 'exciting']
+      exclude_failures: true
+
+result_saver:
+  type: "json"
+  config:
+    include_timestamp: true
+
+inference:
+  threshold: 0.5
+  ignore_threshold: true
+  test_tags: null
+
+paths:
+  inputs_dir: "data/inputs"
+  label_file: "video_annotations_coactive.json"
+  tag_descriptions_file: "tag_descriptions_coactive.json"
+  outputs_dir: "data/outputs"
+  cache_dir: "data/cache/videos"
+
+labels:
+  gt_threshold: 0.5
