@@ -128,6 +128,7 @@ video_source:
 
 **Known Issues**:
 - Requires `invoke_model()` API instead of `converse()`
+- Not benchmarked for the 100-tag task: input text token limit (~2k tokens) is insufficient to pass the full 100-tag prompt
 
 ---
 
@@ -280,6 +281,9 @@ video_source:
 **Cost** (per 1M tokens):
 - Input: $2.00
 - Output: $12.00
+
+**Known Issues**:
+- Not benchmarked for the 100-tag task: model was deprecated and the Vertex AI endpoint was no longer reachable at the time of benchmarking
 
 ---
 
