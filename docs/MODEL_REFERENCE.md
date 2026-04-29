@@ -637,6 +637,67 @@ video_source:
 
 ## Self-Hosted OpenAI-Compatible Models
 
+### NVIDIA Nemotron 3 Nano Omni (vLLM)
+
+**Registry Key**: `openai_compatible_vision`, `openai_compatible_summarizer`
+
+**Model**: Self-hosted NVIDIA Nemotron 3 Nano Omni via OpenAI-compatible vLLM endpoint.
+
+**Model ID**: `model` (or whatever name was passed to `--served-model-name` when launching vLLM)
+
+**Input Requirements**:
+- **Input type**: Base64-encoded video (full video, not frames)
+- **Preprocessor**: `video_base64`
+- **Endpoint**: Custom OpenAI-compatible vLLM server
+
+**Configuration Example**:
+```yaml
+<task>:
+  type: <task type>
+  config:
+    base_url: "https://your-nvidia-vllm-endpoint.com/v1"
+    api_key: "not-needed"
+    model_id: "model"  # Must match --served-model-name on the vLLM server
+    model_name: "nvidia-nemotron-3-nano-omni"
+    model_prefix: "nvidia"  # Uses nvidia_system.txt and nvidia_user.txt prompts
+    inference_params:
+      max_tokens: 2048
+      temperature: 0.2
+      extra_body:
+        chat_template_kwargs:
+          enable_thinking: false  # Disable reasoning for video (recommended)
+        mm_processor_kwargs:
+          use_audio_in_video: true  # Process audio track in videos
+```
+
+**Preprocessing**: MediaConvert codec conversion to H.264 (or VP9) needed once. Then video conversion to base64.
+
+```yaml
+preprocessor:
+  type: "video_base64"
+  config:
+    cache_dir: "data/cache/videos_h264"
+```
+
+**Video Source Setup**:
+```yaml
+video_source:
+  type: "s3"
+  mode: "local"  # Download and preprocess
+  s3:
+    bucket: "your-s3-bucket"
+    prefix: "youtube_ads_dataset_h264"
+    region: "us-east-2"
+```
+
+**Cost**: Depends on hosting setup (compute, storage, bandwidth). Set `input_per_1m_tokens: 0.0` and `output_per_1m_tokens: 0.0` in config.
+
+**vLLM-specific parameters** (`extra_body`):
+- `enable_thinking: false` — disables chain-of-thought reasoning (recommended for video tagging)
+- `use_audio_in_video: true` — enables audio track processing alongside video frames
+
+---
+
 ### Qwen3-VL-30B-A3B-Instruct-FP8
 
 **Registry Key**: `openai_compatible_vision`, `openai_compatible_summarizer`
@@ -705,7 +766,8 @@ video_source:
 | Claude Opus 4.6 | Base64 (frames) | N/A | Frame sampling | $5.00 | $25.00 |
 | Claude Sonnet 4.6 | Base64 (frames) | N/A | Frame sampling | $3.00 | $15.00 |
 | Claude Haiku 4.5 | Base64 (frames) | N/A | Frame sampling | $1.00 | $5.00 |
-| Qwen3-VL-30B | Base64 (video) | N/A | None | Varies | Varies |
+| NVIDIA Nemotron 3 Nano Omni (vLLM) | Base64 (video) | H.264, VP9 | MediaConvert once + video_base64 | Varies | Varies |
+| Qwen3-VL-30B | Base64 (video) | Any | None | Varies | Varies |
 
 ---
 
